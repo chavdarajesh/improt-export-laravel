@@ -12,10 +12,27 @@
  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Roboto:400,700&display=swap" rel="stylesheet">
  <!-- owl stylesheets -->
  <link rel="stylesheet" href="{{ asset('assets/front/css/owl.carousel.min.css') }}">
- <link rel="stylesheet" href="{{ asset('assets/front/css/owl.theme.default.min.css') }}">
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"
-     media="screen">
+ <!-- <link rel="stylesheet" href="{{ asset('assets/front/css/owl.theme.default.min.css') }}"> -->
+ <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" -->
+     <!-- media="screen"> -->
 
+     <style>
+    /*** Spinner ***/
+    #spinner {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity .5s ease-out, visibility 0s linear .5s;
+        z-index: 99999;
+        height: 100vh;
+    }
+
+    #spinner.show {
+        transition: opacity .5s ease-out, visibility 0s linear 0s;
+        visibility: visible;
+        opacity: 1;
+        height: 100vh;
+    }
+</style>
  {{-- Custom --}}
  <link rel="stylesheet" type="text/css" href="{{ asset('custom-assets/front/css/toastr.min.css') }}">
  @yield('css')

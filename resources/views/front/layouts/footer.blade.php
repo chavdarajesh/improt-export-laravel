@@ -7,8 +7,8 @@
 <script src="{{ asset('assets/front/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
 <script src="{{ asset('assets/front/js/custom.js') }}"></script>
 <!-- javascript -->
-<script src="{{ asset('assets/front/js/owl.carousel.js') }}"></script>
-<script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+<!-- <script src="{{ asset('assets/front/js/owl.carousel.js') }}"></script> -->
+<!-- <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script> -->
 
 {{-- Custom --}}
 <script src="{{ asset('custom-assets/front/js/toastr.min.js') }}"></script>
@@ -50,6 +50,22 @@
         toastr.warning("{{ session('warning') }}");
     @endif
 </script>
+
+<script>
+    // Spinner
+    var spinner = function() {
+
+        setTimeout(function() {
+            if ($('#spinner').length > 0) {
+                $('#spinner').remove();
+            }
+        }, 200);
+    };
+    $(window).on('load', function() {
+        spinner();
+    });
+</script>
+
 @yield('js')
 
 
