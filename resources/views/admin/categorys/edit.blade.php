@@ -14,29 +14,6 @@
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="id" value="{{ $Category['id'] }}">
-                        <input type="hidden" name="old_image" value="{{ $Category['image'] }}">
-                        <div class="row mb-3">
-                            <div class="d-flex align-items-start align-items-sm-center gap-4">
-                                <img src="{{ $Category['image'] ? asset($Category['image']) : asset('assets/admin/img/avatars/dummy-image-square.jpg') }}"
-                                    alt="Category Image" class="d-block rounded" height="100" width="100"
-                                    id="uploadedAvatar" />
-                                <div id="dvPreview">
-                                </div>
-                                <div class="button-wrapper">
-                                    <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-                                        <span class="d-none d-sm-block">Upload New Image</span>
-                                        <i class="bx bx-upload d-block d-sm-none"></i>
-                                        <input type="file" id="upload" class="account-file-input" hidden
-                                            accept="image/*" name="image" onchange="readURL(this)" />
-                                    </label>
-                                    <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 4Mb</p>
-                                </div>
-                            </div>
-                            <div id="image_error" class="text-danger"> @error('image')
-                                {{ $message }}
-                                @enderror
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="mb-3 col-md-12">
                                 <label for="name" class="form-label">Name</label>
@@ -47,11 +24,11 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="mb-3 col-md-12">
-                                    <label for="description" class="form-label">Description</label>
-                                    <textarea class="form-control @error('description') is-invalid @enderror" rows="5" type="text"
-                                        id="description" name="description" value="">{!! $Category['description'] !!}</textarea>
-                                    <div id="description_error" class="text-danger"> @error('description')
+                            <div class="align-items-center col-md-12 d-flex mb-3">
+                                    <input class="form-checkbox mx-1 @error('is_premium') is-invalid @enderror" type="checkbox"
+                                        id="is_premium" name="is_premium" {{ $Category['is_premium'] == '1' ? 'checked': ''  }} />
+                                    <label for="is_premium" class="form-label m-0 mx-1">Premium Category</label>
+                                    <div id="is_premium_error" class="text-danger"> @error('is_premium')
                                             {{ $message }}
                                         @enderror
                                     </div>

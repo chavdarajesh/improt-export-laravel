@@ -10,20 +10,16 @@
                     <!-- Account -->
                     <hr class="my-0" />
                     <div class="card-body">
-                        <div class="row mb-3">
-                            <div class="d-flex align-items-start align-items-sm-center gap-4">
-                                <img src="{{ $HomeSlider['image'] ? asset($HomeSlider['image']) : asset('assets/admin/img/avatars/dummy-image-square.jpg') }}"
-                                    alt="HomeSlider Image" class="d-block rounded" height="100" width="100"
-                                    id="uploadedAvatar" />
-                                <div id="dvPreview">
-                                </div>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="mb-3 col-md-12">
-                                <label for="name" class="form-label">Name</label>
-                                <input class="form-control" type="text" disabled id="name" name="name"
-                                    value="{{ $HomeSlider['name'] }}" />
+                                <label for="title" class="form-label">Title</label>
+                                <input class="form-control" type="text" disabled id="title" name="title"
+                                    value="{{ $HomeSlider['title'] }}" />
+                            </div>
+                            <div class="mb-3 col-md-12">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control @error('description') is-invalid @enderror" type="text"
+                                    id="description" name="description" disabled >{{ $HomeSlider['description'] }}</textarea>
                             </div>
 
                             <div class="mt-2">

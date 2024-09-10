@@ -39,12 +39,35 @@
             </a>
         </li>
         <li
+            class="menu-item  {{ $current_route_name == 'admin.sisterscompanylogo.index' || $current_route_name == 'admin.sisterscompanylogo.create' || $current_route_name == 'admin.sisterscompanylogo.edit' || $current_route_name == 'admin.sisterscompanylogo.view' ? 'active' : '' }}">
+            <a href="{{ route('admin.sisterscompanylogo.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-wallet-alt"></i>
+                <div>Sisters Company Logo</div>
+            </a>
+        </li>
+
+        <li
             class="menu-item  {{ $current_route_name == 'admin.categorys.index' || $current_route_name == 'admin.categorys.create' || $current_route_name == 'admin.categorys.edit' || $current_route_name == 'admin.categorys.view' ? 'active' : '' }}">
             <a href="{{ route('admin.categorys.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-category-alt"></i>
                 <div>Category</div>
             </a>
         </li>
+        <li
+            class="menu-item  {{ $current_route_name == 'admin.subcategorys.index' || $current_route_name == 'admin.subcategorys.create' || $current_route_name == 'admin.subcategorys.edit' || $current_route_name == 'admin.subcategorys.view' ? 'active' : '' }}">
+            <a href="{{ route('admin.subcategorys.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-category-alt"></i>
+                <div>Sub Category</div>
+            </a>
+        </li>
+        <li
+            class="menu-item  {{ $current_route_name == 'admin.subsubcategorys.index' || $current_route_name == 'admin.subsubcategorys.create' || $current_route_name == 'admin.subsubcategorys.edit' || $current_route_name == 'admin.subsubcategorys.view' ? 'active' : '' }}">
+            <a href="{{ route('admin.subsubcategorys.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-category-alt"></i>
+                <div>Sub Sub Category</div>
+            </a>
+        </li>
+
 
         <li class="menu-item {{ $current_route_name == 'admin.contact.messages.index' || $current_route_name == 'admin.contact.settings.index' || $current_route_name == 'admin.contact.messages.view' ? 'open active' : '' }}"
             style="">

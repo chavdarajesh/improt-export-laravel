@@ -46,6 +46,15 @@ class SiteSettingSeeder extends Seeder
                 'created_at' => Carbon::now('Asia/Kolkata')
             ],
             [
+                'key' => 'home_slider_image',
+                'value' => null,
+                'title' => 'Header Slider Image',
+                'description' => null,
+                'status' => 1,
+                'order' => 1,
+                'created_at' => Carbon::now('Asia/Kolkata')
+            ],
+            [
                 'key' => 'social_facebook_url',
                 'value' => 'https://facebook.com',
                 'title' => 'Facebook URL',

@@ -21,11 +21,11 @@ $favicon = SiteSetting::getSiteSettings('favicon');
         <title>{{ env('APP_NAME', 'Laravel App') }} | @yield('title')</title>
     <!-- favicons Icons -->
     <link rel="apple-touch-icon" sizes="180x180"
-        href="{{ isset($favicon) && isset($favicon->value) && $favicon != null && $favicon->value != '' ? asset($favicon->value) : asset('custom-assets/admin/siteimages/logo/favicon.png') }}" />
+        href="{{ isset($favicon) && isset($favicon->value) && $favicon != null && $favicon->value != '' ? asset($favicon->value) : asset('custom-assets/admin/siteimages/logo/favicon.ico') }}" />
     <link rel="icon" type="image/png" sizes="32x32"
-        href="{{ isset($favicon) && isset($favicon->value) && $favicon != null && $favicon->value != '' ? asset($favicon->value) : asset('custom-assets/admin/siteimages/logo/favicon.png') }}" />
+        href="{{ isset($favicon) && isset($favicon->value) && $favicon != null && $favicon->value != '' ? asset($favicon->value) : asset('custom-assets/admin/siteimages/logo/favicon.ico') }}" />
     <link rel="icon" type="image/png" sizes="16x16"
-        href="{{ isset($favicon) && isset($favicon->value) && $favicon != null && $favicon->value != '' ? asset($favicon->value) : asset('custom-assets/admin/siteimages/logo/favicon.png') }}" />
+        href="{{ isset($favicon) && isset($favicon->value) && $favicon != null && $favicon->value != '' ? asset($favicon->value) : asset('custom-assets/admin/siteimages/logo/favicon.ico') }}" />
     <meta name="description" content="@yield('description')" />
 
     @include('front.layouts.head')

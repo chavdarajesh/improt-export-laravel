@@ -1,17 +1,19 @@
 @extends('admin.layouts.main')
-@section('title', 'HomeSliders List')
+@section('title', 'SubSubCategory List')
 @section('css')
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="stylesheet" href="{{ asset('assets/admin/css/dataTables.bootstrap5.min.css') }}">
 @stop
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row">
             <div class="col-md-12">
+
                 <div class="card">
                     <div class="d-flex justify-content-between">
-                        <h5 class="card-header">HomeSliders</h5>
+                        <h5 class="card-header">SubSubCategory</h5>
                         <div class="card-header d-flex align-items-center">
-                            <a href="{{ route('admin.homeslider.create') }}" class="btn btn-primary add-btn">Create HomeSlider</a>
+                            <a href="{{ route('admin.subsubcategorys.create') }}" class="btn btn-primary add-btn">Create SubSubCategory</a>
                         </div>
                     </div>
                     <div class="table-responsive text-nowrap p-3">
@@ -19,7 +21,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">ID</th>
-                                    <th class="text-center">Title</th>
+                                    <th class="text-center">Name</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Created At</th>
                                     <th class="text-center">Actions</th>
@@ -33,11 +35,8 @@
     </div>
 @stop
 @section('js')
-
     <script src="{{ asset('assets/admin/js/jquery.dataTables.min.js') }}"></script>
-
     <script src="{{ asset('assets/admin/js/dataTables.bootstrap5.min.js') }}"></script>
-
 
     <script>
         $.ajaxSetup({
@@ -52,13 +51,13 @@
                 order: [0, 'DESC'],
                 pageLength: 10,
                 searching: true,
-                ajax: "{{ route('admin.homeslider.index') }}",
+                ajax: "{{ route('admin.subsubcategorys.index') }}",
                 columns: [{
                         data: 'id',
                         className: "text-center",
                     },
                     {
-                        data: 'title'
+                        data: 'name'
                     },
                     {
                         data: 'status',
@@ -84,7 +83,7 @@
                 var id = $(this).data('id');
                 $.ajax({
                     type: "POST",
-                    url: '{{ route('admin.homeslider.status.toggle') }}',
+                    url: "{{ route('admin.subsubcategorys.status.toggle') }}",
                     data: {
                         "_token": "{{ csrf_token() }}",
                         'status': status,

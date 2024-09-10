@@ -45,5 +45,8 @@
         visibility: visible;
         opacity: 1;
     }
+    div#cke_notifications_area_description {
+        display: none !important;
+    }
 </style>
 @yield('css')

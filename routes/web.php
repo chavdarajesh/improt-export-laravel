@@ -6,6 +6,9 @@ use App\Http\Controllers\Admin\SiteSettingController as AdminSiteSettingControll
 use App\Http\Controllers\Admin\NewsletterController as AdminNewsletterController;
 use App\Http\Controllers\Admin\NewsletterMailController as AdminNewsletterMailController;
 use App\Http\Controllers\Admin\HomeSliderController as AdminHomeSliderController;
+use App\Http\Controllers\Admin\SubcategoryController as AdminSubcategoryController;
+use App\Http\Controllers\Admin\SubSubCategoryController as AdminSubSubCategoryController;
+use App\Http\Controllers\Admin\LogoController as AdminLogoController;
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
@@ -78,17 +81,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'is_a
     Route::post('/site/settings/save', [AdminSiteSettingController::class, 'save'])->name('admin.site.settings.save');
     // site settings Modlue end
 
-    // category Modlue start
-    Route::any('/categorys', [AdminCategoryController::class, 'index'])->name('admin.categorys.index');
-    Route::get('/categorys/create', [AdminCategoryController::class, 'create'])->name('admin.categorys.create');
-    Route::post('/categorys/save', [AdminCategoryController::class, 'save'])->name('admin.categorys.save');
-    Route::get('/categorys/view/{id}', [AdminCategoryController::class, 'view'])->name('admin.categorys.view');
-    Route::get('/categorys/edit/{id}', [AdminCategoryController::class, 'edit'])->name('admin.categorys.edit');
-    Route::put('/categorys/update', [AdminCategoryController::class, 'update'])->name('admin.categorys.update');
-    Route::post('/categorys/status/toggle', [AdminCategoryController::class, 'statusToggle'])->name('admin.categorys.status.toggle');
-    Route::post('/categorys/delete/{id}', [AdminCategoryController::class, 'delete'])->name('admin.categorys.delete');
-    // category Modlue end
-
     // contact us msg Modlue start
     Route::get('/newsletters', [AdminNewsletterController::class, 'index'])->name('admin.newsletters.index');
     Route::post('/newsletters/delete/{id}', [AdminNewsletterController::class, 'delete'])->name('admin.newsletters.delete');
@@ -128,6 +120,43 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'is_a
     Route::post('/categorys/status/toggle', [AdminCategoryController::class, 'statusToggle'])->name('admin.categorys.status.toggle');
     Route::post('/categorys/delete/{id}', [AdminCategoryController::class, 'delete'])->name('admin.categorys.delete');
     // category Modlue end
+
+     // subcategorys Modlue start
+     Route::any('/subcategorys', [AdminSubcategoryController::class, 'index'])->name('admin.subcategorys.index');
+     Route::get('/subcategorys/create', [AdminSubcategoryController::class, 'create'])->name('admin.subcategorys.create');
+     Route::post('/subcategorys/save', [AdminSubcategoryController::class, 'save'])->name('admin.subcategorys.save');
+     Route::get('/subcategorys/view/{id}', [AdminSubcategoryController::class, 'view'])->name('admin.subcategorys.view');
+     Route::get('/subcategorys/edit/{id}', [AdminSubcategoryController::class, 'edit'])->name('admin.subcategorys.edit');
+     Route::put('/subcategorys/update', [AdminSubcategoryController::class, 'update'])->name('admin.subcategorys.update');
+     Route::post('/subcategorys/status/toggle', [AdminSubcategoryController::class, 'statusToggle'])->name('admin.subcategorys.status.toggle');
+     Route::post('/subcategorys/delete/{id}', [AdminSubcategoryController::class, 'delete'])->name('admin.subcategorys.delete');
+     Route::post('/subcategorys/delete-subcat', [AdminSubcategoryController::class, 'deleteSubcat'])->name('admin.subcategorys.delete.subcat');
+     // subcategorys Modlue end
+
+       // subsubcategorys Modlue start
+    Route::any('/subsubcategorys', [AdminSubSubCategoryController::class, 'index'])->name('admin.subsubcategorys.index');
+    Route::get('/subsubcategorys/create', [AdminSubSubCategoryController::class, 'create'])->name('admin.subsubcategorys.create');
+    Route::post('/subsubcategorys/save', [AdminSubSubCategoryController::class, 'save'])->name('admin.subsubcategorys.save');
+    Route::get('/subsubcategorys/view/{id}', [AdminSubSubCategoryController::class, 'view'])->name('admin.subsubcategorys.view');
+    Route::get('/subsubcategorys/edit/{id}', [AdminSubSubCategoryController::class, 'edit'])->name('admin.subsubcategorys.edit');
+    Route::put('/subsubcategorys/update', [AdminSubSubCategoryController::class, 'update'])->name('admin.subsubcategorys.update');
+    Route::post('/subsubcategorys/status/toggle', [AdminSubSubCategoryController::class, 'statusToggle'])->name('admin.subsubcategorys.status.toggle');
+    Route::post('/subsubcategorys/delete/{id}', [AdminSubSubCategoryController::class, 'delete'])->name('admin.subsubcategorys.delete');
+    Route::post('/subsubcategorys/getsub', [AdminSubSubCategoryController::class, 'getSubcategories'])->name('admin.subsubcategorys.get.subcat');
+
+    // subsubcategorys Modlue end
+
+
+     // sisterscompanylogo Modlue start
+     Route::any('/sisterscompanylogo', [AdminLogoController::class, 'index'])->name('admin.sisterscompanylogo.index');
+     Route::get('/sisterscompanylogo/create', [AdminLogoController::class, 'create'])->name('admin.sisterscompanylogo.create');
+     Route::post('/sisterscompanylogo/save', [AdminLogoController::class, 'save'])->name('admin.sisterscompanylogo.save');
+     Route::get('/sisterscompanylogo/view/{id}', [AdminLogoController::class, 'view'])->name('admin.sisterscompanylogo.view');
+     Route::get('/sisterscompanylogo/edit/{id}', [AdminLogoController::class, 'edit'])->name('admin.sisterscompanylogo.edit');
+     Route::put('/sisterscompanylogo/update', [AdminLogoController::class, 'update'])->name('admin.sisterscompanylogo.update');
+     Route::post('/sisterscompanylogo/status/toggle', [AdminLogoController::class, 'statusToggle'])->name('admin.sisterscompanylogo.status.toggle');
+     Route::post('/sisterscompanylogo/delete/{id}', [AdminLogoController::class, 'delete'])->name('admin.sisterscompanylogo.delete');
+     // sisterscompanylogo Modlue end
 });
 // Admin route end
 

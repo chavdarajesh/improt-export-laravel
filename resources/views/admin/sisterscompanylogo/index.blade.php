@@ -1,5 +1,5 @@
 @extends('admin.layouts.main')
-@section('title', 'HomeSliders List')
+@section('title', 'SistersCompanyLogo List')
 @section('css')
     <link rel="stylesheet" href="{{ asset('assets/admin/css/dataTables.bootstrap5.min.css') }}">
 @stop
@@ -9,9 +9,9 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="d-flex justify-content-between">
-                        <h5 class="card-header">HomeSliders</h5>
+                        <h5 class="card-header">SistersCompanyLogo</h5>
                         <div class="card-header d-flex align-items-center">
-                            <a href="{{ route('admin.homeslider.create') }}" class="btn btn-primary add-btn">Create HomeSlider</a>
+                            <a href="{{ route('admin.sisterscompanylogo.create') }}" class="btn btn-primary add-btn">Create SistersCompanyLogo</a>
                         </div>
                     </div>
                     <div class="table-responsive text-nowrap p-3">
@@ -19,7 +19,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">ID</th>
-                                    <th class="text-center">Title</th>
+                                    <th class="text-center">Name</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Created At</th>
                                     <th class="text-center">Actions</th>
@@ -52,13 +52,13 @@
                 order: [0, 'DESC'],
                 pageLength: 10,
                 searching: true,
-                ajax: "{{ route('admin.homeslider.index') }}",
+                ajax: "{{ route('admin.sisterscompanylogo.index') }}",
                 columns: [{
                         data: 'id',
                         className: "text-center",
                     },
                     {
-                        data: 'title'
+                        data: 'name'
                     },
                     {
                         data: 'status',
@@ -84,7 +84,7 @@
                 var id = $(this).data('id');
                 $.ajax({
                     type: "POST",
-                    url: '{{ route('admin.homeslider.status.toggle') }}',
+                    url: '{{ route('admin.sisterscompanylogo.status.toggle') }}',
                     data: {
                         "_token": "{{ csrf_token() }}",
                         'status': status,

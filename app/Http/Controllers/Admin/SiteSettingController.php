@@ -68,7 +68,22 @@ class SiteSettingController extends Controller
                         if ($request->old_loader && file_exists(public_path($request->old_loader))) {
                             unlink(public_path($request->old_loader));
                         }
-                    } else {
+                    }
+                    else if ($field == 'home_slider_image') {
+                        $folderPath = public_path('custom-assets/admin/uplode/images/sitesettings/images/');
+                        if (!file_exists($folderPath)) {
+                            mkdir($folderPath, 0777, true);
+                        }
+
+                        $imageoriginalname = str_replace(" ", "-", $value->getClientOriginalName());
+                        $imageName = rand(1000, 9999) . time() . $imageoriginalname;
+                        $value->move($folderPath, $imageName);
+                        $settingObj->value = 'custom-assets/admin/uplode/images/sitesettings/images/' . $imageName;
+
+                        if ($request->old_home_slider_image && file_exists(public_path($request->old_home_slider_image))) {
+                            unlink(public_path($request->old_home_slider_image));
+                        }
+                    }else {
                         if ($value) {
                             $settingObj->value = $value;
                         } else {
