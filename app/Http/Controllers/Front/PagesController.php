@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\ContactSetting;
 use App\Models\HomeSlider;
 use App\Models\Newsletter;
+use App\Models\SistersCompanyLogo;
+use App\Models\Subcategory;
+use App\Models\SubSubCategory;
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
@@ -13,8 +17,10 @@ class PagesController extends Controller
 
     public function home()
     {
+        $ContactSetting = ContactSetting::where('static_id', 1)->where('status', 1)->first();
         $HomeSlider = HomeSlider::where('status', 1)->orderBy('id', 'DESC')->get();
-        return view('front.pages.home', ['HomeSlider' => $HomeSlider]);
+        $SistersCompanyLogos = SistersCompanyLogo::where('status', 1)->orderBy('id', 'DESC')->get();
+        return view('front.pages.home', ['HomeSlider' => $HomeSlider, 'ContactSetting' => $ContactSetting, 'SistersCompanyLogos' => $SistersCompanyLogos]);
     }
     public function about()
     {
@@ -72,5 +78,25 @@ class PagesController extends Controller
             return redirect()->route('front.home')->with('message', 'UnSubscribed Sucssesfully!..');
         }
         return redirect()->route('front.home')->with('error', 'Already UnSubscribed..');
+    }
+
+    public function productCategory($id)
+    {
+        $Product = Subcategory::find($id);
+        if ($Product) {
+            return view('front.pages.product', ['Product' => $Product]);
+        } else {
+            return redirect()->back()->with('error', 'Product Not Found..!');
+        }
+    }
+
+    public function productSubCategory($id)
+    {
+        $Product = SubSubCategory::find($id);
+        if ($Product) {
+            return view('front.pages.sub-product', ['Product' => $Product]);
+        } else {
+            return redirect()->back()->with('error', 'Product Not Found..!');
+        }
     }
 }

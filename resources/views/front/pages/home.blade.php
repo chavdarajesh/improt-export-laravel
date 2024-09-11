@@ -6,7 +6,8 @@ $home_slider_image = SiteSetting::getSiteSettings('home_slider_image');
 @extends('front.layouts.main')
 @section('title', 'Home')
 @section('css')
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" href="{{ asset('assets/front/css/slick.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/front/css/slick-theme.min.css') }}">
 
 <style>
     .banner_section {
@@ -14,41 +15,32 @@ $home_slider_image = SiteSetting::getSiteSettings('home_slider_image');
         float: left;
         background-image: url("{{ isset($home_slider_image) && $home_slider_image && $home_slider_image->value && $home_slider_image->value != null ? asset($home_slider_image->value) : asset('assets/front/images/banner-bg.png') }}");
         height: auto;
-        background-size: 100%;
+        background-size: cover !important; /* Fits the image to cover the entire area without preserving aspect ratio */
+        background-position: center !important; /* Ensure the image is centered */
+    }
+
+    .map-responsive iframe {
+        width: 100%;
+        height: 100%;
+    }
+
+    .carousel-sister-logo {
+        width: 90%;
+        margin: 0px auto;
+    }
+
+    .carousel-sister-logo .slick-slide {
+        margin: 10px;
+    }
+
+   .carousel-sister-logo .slick-slide img {
+        width: 100%;
+        border: 2px solid #fff;
     }
 </style>
 @stop
 @section('content')
-{{-- @if (!$HomeSlider->isEmpty())
-        <!-- Carousel Start -->
-        <div class="container-fluid p-0 wow fadeIn" data-wow-delay="0.1s">
-            <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                <div class="carousel-indicators">
-                    @foreach ($HomeSlider as $key => $slider)
-                        <button type="button" data-bs-target="#header-carousel" data-bs-slide-to="{{ $key }}"
-class=" {{ $key == 0 ? 'active' : '' }} " {{ $key == 0 ? ' aria-current="true" ' : '' }}
-aria-label="Slide {{ $key + 1 }}"></button>
-@endforeach
-</div>
-<div class="carousel-inner">
-    @foreach ($HomeSlider as $key => $slider)
-    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-        <img class="w-100" src="{{ asset($slider->image) }}" alt="Image">
-    </div>
-    @endforeach
-</div>
-<button class="carousel-control-prev" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-</button>
-<button class="carousel-control-next" type="button" data-bs-target="#header-carousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-</button>
-</div>
-</div>
-<!-- Carousel End -->
-@endif --}}
+@if (!$HomeSlider->isEmpty())
 <!--banner section start -->
 <div class="banner_section layout_padding">
     <div class="container-fluid">
@@ -57,79 +49,27 @@ aria-label="Slide {{ $key + 1 }}"></button>
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                     <!-- Indicators -->
                     <ol class="carousel-indicators">
-                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#myCarousel" data-slide-to="1"></li>
-                        <li data-target="#myCarousel" data-slide-to="2"></li>
-                        <li data-target="#myCarousel" data-slide-to="3"></li>
-                        <li data-target="#myCarousel" data-slide-to="4"></li>
+                        @foreach ($HomeSlider as $key => $slider)
+                        <li data-target="#myCarousel" data-slide-to="{{$key}}" class=" {{ $key == 0 ? 'active' : '' }} "></li>
+                        @endforeach
                     </ol>
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
+
+                        @foreach ($HomeSlider as $key => $slider)
+                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}  ">
                             <div class="container">
                                 <div class="banner_main">
-                                    <h1 class="banner_taital">Business Agency Profit Your Marketing</h1>
-                                    <p class="banner_text">It is a long established fact that a reader will be
-                                        distracted by the readable content of a page when</p>
+                                    <h1 class="banner_taital">{{$slider->title}}</h1>
+                                    <p class="banner_text">{{$slider->description}}</p>
                                     <div class="btn_main">
-                                        <div class="contact_bt active "><a href="#">Contact Us</a></div>
-                                        <div class="readmore_bt"><a href="#">Read More</a></div>
+                                        <div class="contact_bt active "><a href="{{route('front.contact')}}">Contact Us</a></div>
+                                        <div class="readmore_bt"><a href="{{route('front.about')}}">Read More</a></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="carousel-item">
-                            <div class="container">
-                                <div class="banner_main">
-                                    <h1 class="banner_taital">Business Agency Profit Your Marketing</h1>
-                                    <p class="banner_text">It is a long established fact that a reader will be
-                                        distracted by the readable content of a page when</p>
-                                    <div class="btn_main">
-                                        <div class="contact_bt active "><a href="#">Contact Us</a></div>
-                                        <div class="readmore_bt"><a href="#">Read More</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="container">
-                                <div class="banner_main">
-                                    <h1 class="banner_taital">Business Agency Profit Your Marketing</h1>
-                                    <p class="banner_text">It is a long established fact that a reader will be
-                                        distracted by the readable content of a page when</p>
-                                    <div class="btn_main">
-                                        <div class="contact_bt active "><a href="#">Contact Us</a></div>
-                                        <div class="readmore_bt"><a href="#">Read More</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="container">
-                                <div class="banner_main">
-                                    <h1 class="banner_taital">Business Agency Profit Your Marketing</h1>
-                                    <p class="banner_text">It is a long established fact that a reader will be
-                                        distracted by the readable content of a page when</p>
-                                    <div class="btn_main">
-                                        <div class="contact_bt active "><a href="#">Contact Us</a></div>
-                                        <div class="readmore_bt"><a href="#">Read More</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="container">
-                                <div class="banner_main">
-                                    <h1 class="banner_taital">Business Agency Profit Your Marketing</h1>
-                                    <p class="banner_text">It is a long established fact that a reader will be
-                                        distracted by the readable content of a page when</p>
-                                    <div class="btn_main">
-                                        <div class="contact_bt active "><a href="#">Contact Us</a></div>
-                                        <div class="readmore_bt"><a href="#">Read More</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -137,6 +77,7 @@ aria-label="Slide {{ $key + 1 }}"></button>
     </div>
 </div>
 <!--banner section end -->
+@endif
 <!--about section start -->
 <div class="about_section layout_padding">
     <div class="container">
@@ -242,10 +183,11 @@ aria-label="Slide {{ $key + 1 }}"></button>
                 <div class="play_icon"><a href="#"><img src="{{ asset('assets/front/images/play-icon.png') }}"></a></div>
             </div>
         </div>
-        <div class="seemore_bt"><a href="#">See More</a></div>
+        <div class="seemore_bt"><a href="{{route('front.about')}}">See More</a></div>
     </div>
 </div>
 <!-- events section end -->
+
 <!-- contact section start -->
 <div class="contact_section layout_padding">
     <div class="container">
@@ -255,23 +197,41 @@ aria-label="Slide {{ $key + 1 }}"></button>
             <div class="row">
                 <div class="col-md-6">
                     <div class="contact_main">
-                        <input type="text" class="mail_text" placeholder="Full Name" name="Full Name">
-                        <input type="text" class="mail_text" placeholder="Phone Number" name="Phone Number">
-                        <input type="text" class="mail_text" placeholder="Email" name="Email">
-                        <textarea class="massage-bt" placeholder="Massage" rows="5" id="comment" name="Massage"></textarea>
-                        <div class="send_bt"><a href="#">SEND</a></div>
+                        <form id="form" action="{{ route('front.contact.message.save') }}" method="POST">
+                            @csrf
+                            <input type="text" class="mail_text @error('name') border border-danger @enderror " placeholder="Full Name" id="name" value="{{ old('name') }}" name="name">
+                            <div id="name_error" class="text-danger"> @error('name')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                            <input type="text" class="mail_text @error('phone') border border-danger @enderror" placeholder="Phone Number" id="phone" name="phone" value="{{ old('phone') }}">
+                            <div id="phone_error" class="text-danger"> @error('phone')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                            <input type="text" class="mail_text @error('email') border border-danger @enderror" placeholder="Email" id="email" name="email" value="{{ old('email') }}">
+                            <div id="email_error" class="text-danger"> @error('email')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                            <textarea class="massage-bt @error('message') border border-danger @enderror " placeholder="Massage" rows="5" id="message" name="message">{{ old('message') }}</textarea>
+                            <div id="message_error" class="text-danger"> @error('message')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                            <div class="send_bt"><button type="submit">SEND</button></div>
+                        </form>
                     </div>
                 </div>
+                @if ($ContactSetting)
                 <div class="col-md-6">
-                    <div class="map_main">
-                        <div class="map-responsive">
-                            <iframe
-                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&amp;q=Eiffel+Tower+Paris+France"
-                                width="600" height="400" frameborder="0" style="border:0; width: 100%;"
-                                allowfullscreen=""></iframe>
+                    <div class="map_main w-100 h-100">
+                        <div class="map-responsive w-100 h-100">
+                            {!! $ContactSetting['map_iframe'] !!}
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>
@@ -400,92 +360,87 @@ aria-label="Slide {{ $key + 1 }}"></button>
         </div>
     </div>
 </div>
+@if(!$SistersCompanyLogos->isEmpty())
 <!-- testimonial section end -->
-<style>
-    .slick-slider .element {
-        height: 100px;
-        width: 100px;
-        background-color: #000;
-        color: #fff;
-        border-radius: 5px;
-        display: inline-block;
-        margin: 0px 10px;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        font-size: 20px;
-    }
+<div class="testimonial_section layout_padding">
 
-    .slick-slider .slick-disabled {
-        opacity: 0;
-        pointer-events: none;
-    }
-</style>
-<div class="container my-5">
-    <h2>Our Partners</h2>
-    <div class="slick-slider">
-        <div class="element element-1">1</div>
-        <div class="element element-2">2</div>
-        <div class="element element-3">3</div>
-        <div class="element element-4">4</div>
-        <div class="element element-5">4</div>
-        <div class="element element-6">6</div>
-        <div class="element element-7">7</div>
-        <div class="element element-8">8</div>
-        <div class="element element-9">9</div>
-        <div class="element element-10">10</div>
+    <div class="container my-5">
+        <h2>Our Sister Company</h2>
+        <div class="carousel-sister-logo">
+            @foreach($SistersCompanyLogos as $key =>$logo)
+            <div><img src="{{asset($logo->image)}}"></div>
+            @endforeach
+        </div>
     </div>
 </div>
+@endif
 @stop
 
 @section('js')
-<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script src="{{ asset('assets/front/js/slick.min.js') }}"></script>
 
 <script>
-    $('.slick-slider').slick({
-        arrows:false,
-        dots: false,
-        infinite: true,
-        speed: 300,
-        autoplay: true,
-        autoplaySpeed: 2000,
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        centerMode: true,
-        variableWidth: true,
-        responsive: [{
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                    infinite: true,
-                    dots: false
+    $(document).ready(function() {
+        $('.carousel-sister-logo').slick({
+            slidesToShow: 3,
+            dots: false,
+            centerMode: true,
+            autoplay: true,
+            autoplaySpeed: 2000,
+        });
+    });
+    $(document).ready(function() {
+        $('#form').validate({
+            rules: {
+                name: {
+                    required: true,
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                phone: {
+                    number: true
+                },
+                subject: {
+                    required: true,
+                },
+                message: {
+                    required: true,
                 }
             },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2
+            messages: {
+                name: {
+                    required: 'This field is required',
+                },
+                email: {
+                    required: 'This field is required',
+                    email: 'Enter a valid email',
+                },
+                phone: {
+                    number: 'Please enter a valid phone number.',
+                },
+                subject: {
+                    required: 'This field is required',
+                },
+                message: {
+                    required: 'This field is required',
                 }
             },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                $('#' + element.attr('name') + '_error').html(error)
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('border border-danger');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('border border-danger');
+            },
+            submitHandler: function(form) {
+                form.submit();
             }
-            // You can unslick at a given breakpoint now by adding:
-            // settings: "unslick"
-            // instead of a settings object
-        ]
+        });
     });
 </script>
 @stop

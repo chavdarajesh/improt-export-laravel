@@ -157,7 +157,7 @@
     font-size: 32px;
 }
 .read_bt {
-    padding-top: 24px;
+    /* padding-top: 24px; */
 }
 .blog_text{
   font-size: 15px;
@@ -217,7 +217,7 @@
   padding-top: 0px;
 }
 .read_bt {
-    padding-top: 30px;
+    /* padding-top: 30px; */
 }
 .events_taital {
     font-size: 36px;
@@ -237,7 +237,7 @@
 .subscribe_bt{
   float: initial;
 }
-.subscribe_bt a{
+.subscribe_bt button{
   margin-top: 20px;
 }
 .footer_section_2{

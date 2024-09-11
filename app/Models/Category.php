@@ -24,4 +24,10 @@ class Category extends Model
         return $this->hasMany(Subcategory::class);
     }
 
+
+    public function getCategory()
+    {
+        return Category::where('status', 1)->get();
+    }
+
 }

@@ -36,7 +36,6 @@ class ContactController extends Controller
                 ->orWhere('name', 'like', '%' . $searchValue . '%')
                 ->orWhere('email', 'like', '%' . $searchValue . '%')
                 ->orWhere('phone', 'like', '%' . $searchValue . '%')
-                ->orWhere('subject', 'like', '%' . $searchValue . '%')
                 ->orWhere('created_at', 'like', '%' . $searchValue . '%')
                 ->count();
 
@@ -45,7 +44,6 @@ class ContactController extends Controller
                 ->orWhere('name', 'like', '%' . $searchValue . '%')
                 ->orWhere('email', 'like', '%' . $searchValue . '%')
                 ->orWhere('phone', 'like', '%' . $searchValue . '%')
-                ->orWhere('subject', 'like', '%' . $searchValue . '%')
                 ->orWhere('created_at', 'like', '%' . $searchValue . '%')
 
                 ->orderBy($columnName, $columnSortOrder)
@@ -96,7 +94,6 @@ class ContactController extends Controller
                     "name" => $row->name,
                     "email" => $row->email,
                     "phone" => $row->phone,
-                    "subject" => strlen($row->subject) > 25 ? substr($row->subject, 0, 25) . '..' : $row->subject,
                     "created_at" => $row->created_at ? Carbon::parse($row->created_at)->setTimezone('Asia/Kolkata')->toDateTimeString() : '',
                     "actions" => $html,
                 );

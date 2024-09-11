@@ -33,6 +33,28 @@
         height: 100vh;
     }
 </style>
+<style>
+/* .dropdown-toggle.active-dropdown::after {
+    transform: rotate(-90deg);
+} */
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu a::after {
+  transform: rotate(-90deg);
+  position: absolute;
+  right: 6px;
+  top: 1em;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-left: .1rem;
+  margin-right: .1rem;
+}
+</style>
  {{-- Custom --}}
  <link rel="stylesheet" type="text/css" href="{{ asset('custom-assets/front/css/toastr.min.css') }}">
  @yield('css')

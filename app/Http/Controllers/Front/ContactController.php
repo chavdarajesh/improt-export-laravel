@@ -27,7 +27,7 @@ class ContactController extends Controller
             'name' => 'required|max:40',
             'email' => 'required|email',
             'phone' => 'numeric',
-            'subject' => 'required',
+            // 'subject' => 'required',
             'message' => 'required',
         ]);
 
@@ -35,7 +35,7 @@ class ContactController extends Controller
         $ContactMessage->name = $request['name'];
         $ContactMessage->email = $request['email'];
         $ContactMessage->phone = $request['phone'];
-        $ContactMessage->subject = $request['subject'];
+        // $ContactMessage->subject = $request['subject'];
         $ContactMessage->message = $request['message'];
         $ContactMessage->save();
 
@@ -43,15 +43,15 @@ class ContactController extends Controller
             'name' => $request['name'],
             'email' => $request['email'],
             'phone' => $request['phone'],
-            'subject' => $request['subject'],
+            // 'subject' => $request['subject'],
             'message' => $request['message'],
             'id' => $ContactMessage->id,
             'created_at' => $ContactMessage->created_at ? Carbon::parse($ContactMessage->created_at)->setTimezone('Asia/Kolkata')->toDateTimeString() : '',
         ];
-        $email = SiteSetting::where('key','career_enquiry_email')->first();
-        if (isset($email) && $email && $email->value && $email->value != null && $email->value != '') {
-            $mail = Mail::to($email->value)->send(new ContactEnquiry($data));
-        }
+        // $email = SiteSetting::where('key','career_enquiry_email')->first();
+        // if (isset($email) && $email && $email->value && $email->value != null && $email->value != '') {
+        //     $mail = Mail::to($email->value)->send(new ContactEnquiry($data));
+        // }
         if ($ContactMessage) {
             return redirect()->back()->with('message', 'Thanks for contacting us. We will contact you ASAP!..');
         } else {

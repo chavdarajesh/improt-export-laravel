@@ -4,13 +4,13 @@
 
 ## Installation
 
-Clone the repository in xampp folder (make sure that php and composer installed on system) 
+Clone the repository in xampp folder (make sure that php and composer installed on system)
 
-    https://github.com/Yash-devloper/markthemarket_laravel.git
+    https://github.com/chavdarajesh/improt-export-laravel.git
 
 Switch to the repo folder
 
-    cd markthemarket_laravel
+    cd improt-export-laravel
 
 Install all the dependencies using composer
 
@@ -36,7 +36,8 @@ Start the local development server
 
     php artisan serve
 
-You can now access the server at http://localhost:8000
+You can now access the server at http://localhost:8000 OR http://localhost/improt-export-laravel/
+
 You can open admin panel at http://localhost:8000/admin/login
 
 **TL;DR command list**
@@ -46,43 +47,43 @@ You can open admin panel at http://localhost:8000/admin/login
     composer install
     cp .env.example .env
     php artisan key:generate
-    
+
 **Make sure you set the correct database connection information before running the migrations** [Environment variables](#environment-variables)
 
     php artisan migrate
     php artisan db:seed
     php artisan serve
 
-----------
+---
 
 # Code overview
 
 ## Environment variables
 
-- `.env` - Environment variables can be set in this file
+-   `.env` - Environment variables can be set in this file
 
 DB_DATABASE=your-database-name
 DB_USERNAME=your-database-username
 DB_PASSWORD=your-database-password
 
-MAIL_MAILER=mail-mailer
-MAIL_HOST=mail-host
-MAIL_PORT=mail-port
+<!-- Using  Gamil -->
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
 MAIL_USERNAME=mail-username (mostly your email)
 MAIL_PASSWORD=mail-password
-MAIL_ENCRYPTION=mail-encryption
+MAIL_ENCRYPTION=tls
 MAIL_FROM_ADDRESS=mail-from-address
 MAIL_FROM_NAME="${APP_NAME}"
 
+**_Note_** : You can quickly set the database information and other variables in this file and have the application fully working.
 
-***Note*** : You can quickly set the database information and other variables in this file and have the application fully working.
-
- 
 # Authentication
- 
- Admin Credentials
 
- Email => admin@gmail.com
- Password => Admin@123
+Admin Credentials
 
-----------
+Email => admin@gmail.com
+Password => Admin@123
+
+---

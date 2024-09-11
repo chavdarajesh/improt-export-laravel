@@ -164,8 +164,10 @@ Route::group(['namespace' => 'Front'], function () {
 
     Route::get('/', [FrontPagesController::class, 'home'])->name('front.home');
     Route::get('/about', [FrontPagesController::class, 'about'])->name('front.about');
-    Route::get('/privacy_policy', [FrontPagesController::class, 'privacy_policy'])->name('front.privacy_policy');
-    Route::get('/term_and_condition', [FrontPagesController::class, 'term_and_condition'])->name('front.term_and_condition');
+
+
+    Route::get('/product/category/{id}', [FrontPagesController::class, 'productCategory'])->name('admin.product.category');
+    Route::get('/product/subcategory/{id}', [FrontPagesController::class, 'productSubCategory'])->name('admin.product.subcategory');
 
     Route::get('/contact', [FrontContactController::class, 'contact'])->name('front.contact');
     Route::post('/contact/message/save', [FrontContactController::class, 'contactMessageSave'])->name('front.contact.message.save');
@@ -173,4 +175,6 @@ Route::group(['namespace' => 'Front'], function () {
     Route::post('/newsletter/save', [FrontPagesController::class, 'newsletterSave'])->name('front.newsletter.save');
     Route::get('/newsletter/unsubscribe/{email}', [FrontPagesController::class, 'newsletterUnSubscribe'])->name('front.newsletter.unsubscribe');
 
+    Route::get('/privacy_policy', [FrontPagesController::class, 'privacy_policy'])->name('front.privacy_policy');
+    Route::get('/term_and_condition', [FrontPagesController::class, 'term_and_condition'])->name('front.term_and_condition');
 });

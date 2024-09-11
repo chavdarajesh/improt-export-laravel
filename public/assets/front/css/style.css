@@ -435,8 +435,8 @@ button {
 }
 .read_bt {
     width: 170px;
-    float: right;
-    padding-top: 64px;
+    /* float: right; */
+    /* padding-top: 64px; */
 }
 .read_bt a {
     width: 100%;
@@ -718,7 +718,7 @@ textarea#comment::placeholder {
     float: left;
     margin-top: 40px;
 }
-.send_bt a {
+.send_bt button {
     width: 100%;
     float: left;
     background-color: #13a25d;
@@ -728,7 +728,7 @@ textarea#comment::placeholder {
     font-size: 16px;
    font-family: 'Roboto', sans-serif;
 }
-.send_bt a:hover {
+.send_bt button:hover {
     background-color: #ffffff;
     color: #000;
 }
@@ -932,7 +932,7 @@ textarea#comment::placeholder {
     margin-top: 20px;
 }
 
-.subscribe_bt a {
+.subscribe_bt button {
     width: 100%;
     float: left;
     font-size: 20px;
@@ -940,7 +940,7 @@ textarea#comment::placeholder {
     background-color: transparent;
     text-transform: uppercase;
 }
-.subscribe_bt a:hover {
+.subscribe_bt button:hover {
     color: #ffffff;
 }
 /* footer section end */

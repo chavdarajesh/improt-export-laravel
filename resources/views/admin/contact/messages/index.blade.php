@@ -17,7 +17,6 @@
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Email </th>
                                     <th class="text-center">Phone </th>
-                                    <th class="text-center">Subject</th>
                                     <th class="text-center">Enquiry Date</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
@@ -59,9 +58,6 @@
                     },
                     {
                         data: 'phone'
-                    },
-                    {
-                        data: 'subject',
                     },
                     {
                         data: 'created_at',

@@ -91,23 +91,23 @@ class SiteSettingSeeder extends Seeder
                 'created_at' => Carbon::now('Asia/Kolkata')
             ],
             [
-                'key' => 'social_linkedin_url',
-                'value' => 'https://linkedin.com',
-                'title' => 'Linkedin URL',
+                'key' => 'social_twitter_url',
+                'value' => 'https://twitter.com',
+                'title' => 'Twitter URL',
                 'description' => null,
                 'status' => 1,
                 'order' => 13,
                 'created_at' => Carbon::now('Asia/Kolkata')
             ],
-            // [
-            //     'key' => 'career_enquiry_email',
-            //     'value' => null,
-            //     'title' => 'Enquiry Email',
-            //     'description' => null,
-            //     'status' => 1,
-            //     'order' => 14,
-            //     'created_at' => Carbon::now('Asia/Kolkata')
-            // ],
+            [
+                'key' => 'contact_enquiry_phone',
+                'value' => null,
+                'title' => 'Enquiry Phone',
+                'description' => null,
+                'status' => 1,
+                'order' => 14,
+                'created_at' => Carbon::now('Asia/Kolkata')
+            ],
         ];
         SiteSetting::insert($Faqs);
     }
