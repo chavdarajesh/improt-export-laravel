@@ -25,9 +25,11 @@ class ContactController extends Controller
     {
         $request->validate([
             'name' => 'required|max:40',
+            'company_name' => 'required',
             'email' => 'required|email',
-            'phone' => 'numeric',
-            // 'subject' => 'required',
+            'phone' => 'required|numeric',
+            'c_code' => 'required',
+            'address' => 'required',
             'message' => 'required',
         ]);
 
@@ -35,7 +37,9 @@ class ContactController extends Controller
         $ContactMessage->name = $request['name'];
         $ContactMessage->email = $request['email'];
         $ContactMessage->phone = $request['phone'];
-        // $ContactMessage->subject = $request['subject'];
+        $ContactMessage->company_name = $request['company_name'];
+        $ContactMessage->c_code = $request['c_code'];
+        $ContactMessage->address = $request['address'];
         $ContactMessage->message = $request['message'];
         $ContactMessage->save();
 
@@ -43,7 +47,9 @@ class ContactController extends Controller
             'name' => $request['name'],
             'email' => $request['email'],
             'phone' => $request['phone'],
-            // 'subject' => $request['subject'],
+            'address' => $request['address'],
+            'company_name' => $request['company_name'],
+            'c_code' => $request['c_code'],
             'message' => $request['message'],
             'id' => $ContactMessage->id,
             'created_at' => $ContactMessage->created_at ? Carbon::parse($ContactMessage->created_at)->setTimezone('Asia/Kolkata')->toDateTimeString() : '',

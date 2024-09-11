@@ -8,6 +8,10 @@
         width: 100%;
         height: 100%;
     }
+    .focus-none:focus {
+        box-shadow: none !important;
+        outline: none !important;
+    }
 </style>
 @section('content')
 
@@ -26,13 +30,31 @@
                             {{ $message }}
                             @enderror
                         </div>
-                        <input type="text" class="mail_text @error('phone') border border-danger @enderror" placeholder="Phone Number" id="phone" name="phone" value="{{ old('phone') }}">
+                        <input type="text" class="mail_text @error('company_name') border border-danger @enderror " placeholder="Company Name" id="company_name" value="{{ old('company_name') }}" name="company_name">
+                        <div id="company_name_error" class="text-danger"> @error('company_name')
+                            {{ $message }}
+                            @enderror
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control outline-none focus-none mail_text" placeholder="Code" id="c_code" name="c_code" value="{{ old('c_code') }}">
+                            <input type="text" class="form-control outline-none focus-none mail_text w-75" placeholder="Phone Number" id="phone" name="phone" value="{{ old('phone') }}">
+                        </div>
+                        <div id="c_code_error" class="text-danger"> @error('email')
+                            {{ $message }}
+                            @enderror
+                        </div>
                         <div id="phone_error" class="text-danger"> @error('phone')
                             {{ $message }}
                             @enderror
                         </div>
                         <input type="text" class="mail_text @error('email') border border-danger @enderror" placeholder="Email" id="email" name="email" value="{{ old('email') }}">
                         <div id="email_error" class="text-danger"> @error('email')
+                            {{ $message }}
+                            @enderror
+                        </div>
+
+                        <input type="text" class="mail_text @error('address') border border-danger @enderror " placeholder="Address" id="address" value="{{ old('address') }}" name="address">
+                        <div id="address_error" class="text-danger"> @error('address')
                             {{ $message }}
                             @enderror
                         </div>
@@ -71,10 +93,17 @@
                     required: true,
                     email: true
                 },
+                c_code: {
+                    required: true,
+                },
                 phone: {
+                    required: true,
                     number: true
                 },
-                subject: {
+                address: {
+                    required: true,
+                },
+                company_name: {
                     required: true,
                 },
                 message: {
@@ -90,12 +119,16 @@
                     email: 'Enter a valid email',
                 },
                 phone: {
+                    required: 'This field is required',
                     number: 'Please enter a valid phone number.',
                 },
-                subject: {
+                address: {
                     required: 'This field is required',
                 },
                 message: {
+                    required: 'This field is required',
+                },
+                company_name: {
                     required: 'This field is required',
                 }
             },

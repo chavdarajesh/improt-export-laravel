@@ -183,7 +183,9 @@
         $('#form').validate({
             rules: {
                 image: {
-                    required: imageRequired,
+                    required: function() {
+                        return $('#category').find(':selected').attr('is_premium') == '0' && imageRequired;
+                    }
                 },
                 name: {
                     required: true,

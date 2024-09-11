@@ -164,6 +164,7 @@ Route::group(['namespace' => 'Front'], function () {
 
     Route::get('/', [FrontPagesController::class, 'home'])->name('front.home');
     Route::get('/about', [FrontPagesController::class, 'about'])->name('front.about');
+    Route::get('/services', [FrontPagesController::class, 'services'])->name('front.services');
 
 
     Route::get('/product/category/{id}', [FrontPagesController::class, 'productCategory'])->name('admin.product.category');

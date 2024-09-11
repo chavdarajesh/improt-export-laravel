@@ -128,7 +128,9 @@
         $('#form').validate({
             rules: {
                 'image': {
-                    required: true,
+                    required: function() {
+                        return $('#category').find(':selected').attr('is_premium') == '0';
+                    }
                 },
                 'name': {
                     required: true,

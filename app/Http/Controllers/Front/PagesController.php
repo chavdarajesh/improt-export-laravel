@@ -26,6 +26,10 @@ class PagesController extends Controller
     {
         return view('front.pages.about');
     }
+    public function services()
+    {
+        return view('front.pages.services');
+    }
 
     public function term_and_condition()
     {

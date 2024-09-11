@@ -18,6 +18,11 @@
                                 <input class="form-control" type="text" id="name" name="name"
                                     value="{{ $ContactMessage->name }}" disabled />
                             </div>
+                            <div class="mb-3 col-md-12">
+                                <label for="company_name" class="form-label">Company Name</label>
+                                <input class="form-control" type="text" id="company_name" name="company_name"
+                                    value="{{ $ContactMessage->company_name }}" disabled />
+                            </div>
 
                             <div class="mb-3 col-md-12">
                                 <label for="email" class="form-label">E-mail</label>
@@ -25,16 +30,20 @@
                                     value="{{ $ContactMessage->email }}" disabled />
                             </div>
                             <div class="mb-3 col-md-12">
-                                <label for="phone" class="form-label">Phone</label>
-                                <input class="form-control" type="text" id="phone" name="phone"
-                                    value="{{ $ContactMessage->phone }}" disabled />
-                            </div>
+                                    <label class="form-label " for="phone">Phone</label>
+                                    <div class="input-group input-group-merge ">
+                                        <span class="input-group-text">{{ $ContactMessage->c_code }}</span>
+                                        <input type="text" id="phone" name="phone"
+                                            class="form-control"
+                                            value="{{ $ContactMessage->phone }}" disabled />
+                                    </div>
+                                </div>
 
                             <div class="mb-3 col-md-12">
-                                <label class="form-label" for="subject">Subject</label>
+                                <label class="form-label" for="address">Address</label>
                                 <div class="input-group input-group-merge">
-                                    <input type="text" id="subject" name="subject" class="form-control"
-                                        value="{{ $ContactMessage->subject }}" disabled />
+                                    <input type="text" id="address" name="address" class="form-control"
+                                        value="{{ $ContactMessage->address }}" disabled />
                                 </div>
                             </div>
 

@@ -130,7 +130,6 @@ class SubcategoryController extends Controller
         $is_premium_category_selected = $request->input('is_premium_category_selected');
         $rules = [
             'name' =>  'required|unique:subcategories,name,NULL,id,deleted_at,NULL',
-            'image' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:5000',
             'category' => 'required|exists:categories,id',
         ];
 
@@ -138,6 +137,7 @@ class SubcategoryController extends Controller
             $rules['fields'] = 'array';
             $rules['fields.*'] = 'string|max:255';
         } else {
+            $rules['image'] = 'required|file|image|mimes:jpeg,png,jpg,gif|max:5000';
             $rules['description'] = 'required';
             $rules['price'] = 'required';
         }
@@ -209,7 +209,6 @@ class SubcategoryController extends Controller
         $is_premium_category_selected = $request->input('is_premium_category_selected');
         $rules = [
             'name' =>  'required|unique:subcategories,name,' . $request->id,
-            'image' => 'file|image|mimes:jpeg,png,jpg,gif|max:5000',
             'category' => 'required|exists:categories,id',
         ];
 
@@ -219,6 +218,7 @@ class SubcategoryController extends Controller
             $rules['fields'] = 'array';
             $rules['fields.*'] = 'string|max:255';
         } else {
+            $rules['image'] = 'file|image|mimes:jpeg,png,jpg,gif|max:5000';
             $rules['description'] = 'required';
             $rules['price'] = 'required';
         }
