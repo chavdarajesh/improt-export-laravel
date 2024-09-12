@@ -3,14 +3,31 @@
 @section('css')
 
 @stop
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24.5.0/build/css/intlTelInput.css">
+
+<!-- <link rel="stylesheet" href="{{ asset('assets/front/css/intlTelInput.css') }}"> -->
+
 <style>
     .map-responsive iframe {
         width: 100%;
         height: 100%;
     }
+
     .focus-none:focus {
         box-shadow: none !important;
         outline: none !important;
+    }
+
+    .iti.iti--allow-dropdown.iti--show-flags.iti--inline-dropdown {
+        width: 100%;
+        float: left;
+        font-size: 16px;
+        color: #727272;
+        border: 0px;
+        background-color: #ffff;
+        /* padding: 15px; */
+        margin-top: 20px;
+        font-family: 'Roboto', sans-serif;
     }
 </style>
 @section('content')
@@ -35,10 +52,7 @@
                             {{ $message }}
                             @enderror
                         </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control outline-none focus-none mail_text" placeholder="Code" id="c_code" name="c_code" value="{{ old('c_code') }}">
-                            <input type="text" class="form-control outline-none focus-none mail_text w-75" placeholder="Phone Number" id="phone" name="phone" value="{{ old('phone') }}">
-                        </div>
+                        <input type="text" class="mail_text @error('phone') border border-danger @enderror " placeholder="Phone" id="phone" value="{{ old('phone') }}" name="phone">
                         <div id="c_code_error" class="text-danger"> @error('email')
                             {{ $message }}
                             @enderror
@@ -82,6 +96,24 @@
 <!-- contact section end -->
 @stop
 @section('js')
+<script src="{{ asset('assets/front/js/intlTelInput.min.js') }}"></script>
+<script>
+    const input = document.querySelector("#phone");
+    var iti = window.intlTelInput(input, {
+        utilsScript: "{{ asset('assets/front/js/utils.js') }}",
+        hiddenInput: function(telInputName) {
+            return {
+                phone: "phone_full",
+                country: "c_code"
+            };
+        }
+    });
+    input.addEventListener("countrychange", function() {
+        if (iti.getSelectedCountryData() && iti.isValidNumber()) {
+            $('#c_code_error').html('');
+        }
+    });
+</script>
 <script>
     $(document).ready(function() {
         $('#form').validate({
@@ -143,7 +175,11 @@
                 $(element).removeClass('border border-danger');
             },
             submitHandler: function(form) {
-                form.submit();
+                if (iti.isValidNumber()) {
+                    form.submit();
+                } else {
+                    $('#c_code_error').html('Please select a contry code or enter a valid phone number.');
+                }
             }
         });
     });

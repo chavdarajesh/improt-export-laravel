@@ -27,8 +27,7 @@ class ContactController extends Controller
             'name' => 'required|max:40',
             'company_name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required|numeric',
-            'c_code' => 'required',
+            'phone_full' => 'required',
             'address' => 'required',
             'message' => 'required',
         ]);
@@ -36,7 +35,7 @@ class ContactController extends Controller
         $ContactMessage = new ContactMessage();
         $ContactMessage->name = $request['name'];
         $ContactMessage->email = $request['email'];
-        $ContactMessage->phone = $request['phone'];
+        $ContactMessage->phone = $request['phone_full'];
         $ContactMessage->company_name = $request['company_name'];
         $ContactMessage->c_code = $request['c_code'];
         $ContactMessage->address = $request['address'];
@@ -46,7 +45,7 @@ class ContactController extends Controller
         $data = [
             'name' => $request['name'],
             'email' => $request['email'],
-            'phone' => $request['phone'],
+            'phone' => $request['phone_full'],
             'address' => $request['address'],
             'company_name' => $request['company_name'],
             'c_code' => $request['c_code'],

@@ -32,7 +32,7 @@
                             <div class="mb-3 col-md-12">
                                     <label class="form-label " for="phone">Phone</label>
                                     <div class="input-group input-group-merge ">
-                                        <span class="input-group-text">{{ $ContactMessage->c_code }}</span>
+                                        <!-- <span class="input-group-text">{{ $ContactMessage->c_code }}</span> -->
                                         <input type="text" id="phone" name="phone"
                                             class="form-control"
                                             value="{{ $ContactMessage->phone }}" disabled />

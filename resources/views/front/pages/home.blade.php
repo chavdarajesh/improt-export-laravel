@@ -8,6 +8,7 @@ $home_slider_image = SiteSetting::getSiteSettings('home_slider_image');
 @section('css')
 <link rel="stylesheet" href="{{ asset('assets/front/css/slick.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/front/css/slick-theme.min.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24.5.0/build/css/intlTelInput.css">
 
 <style>
     .banner_section {
@@ -36,6 +37,17 @@ $home_slider_image = SiteSetting::getSiteSettings('home_slider_image');
    .carousel-sister-logo .slick-slide img {
         width: 100%;
         border: 2px solid #fff;
+    }
+    .iti.iti--allow-dropdown.iti--show-flags.iti--inline-dropdown {
+        width: 100%;
+        float: left;
+        font-size: 16px;
+        color: #727272;
+        border: 0px;
+        background-color: #ffff;
+        /* padding: 15px; */
+        margin-top: 20px;
+        font-family: 'Roboto', sans-serif;
     }
 </style>
 @stop
@@ -197,30 +209,45 @@ $home_slider_image = SiteSetting::getSiteSettings('home_slider_image');
             <div class="row">
                 <div class="col-md-6">
                     <div class="contact_main">
-                        <form id="form" action="{{ route('front.contact.message.save') }}" method="POST">
-                            @csrf
-                            <input type="text" class="mail_text @error('name') border border-danger @enderror " placeholder="Full Name" id="name" value="{{ old('name') }}" name="name">
-                            <div id="name_error" class="text-danger"> @error('name')
-                                {{ $message }}
-                                @enderror
-                            </div>
-                            <input type="text" class="mail_text @error('phone') border border-danger @enderror" placeholder="Phone Number" id="phone" name="phone" value="{{ old('phone') }}">
-                            <div id="phone_error" class="text-danger"> @error('phone')
-                                {{ $message }}
-                                @enderror
-                            </div>
-                            <input type="text" class="mail_text @error('email') border border-danger @enderror" placeholder="Email" id="email" name="email" value="{{ old('email') }}">
-                            <div id="email_error" class="text-danger"> @error('email')
-                                {{ $message }}
-                                @enderror
-                            </div>
-                            <textarea class="massage-bt @error('message') border border-danger @enderror " placeholder="Massage" rows="5" id="message" name="message">{{ old('message') }}</textarea>
-                            <div id="message_error" class="text-danger"> @error('message')
-                                {{ $message }}
-                                @enderror
-                            </div>
-                            <div class="send_bt"><button type="submit">SEND</button></div>
-                        </form>
+                    <form id="form" action="{{ route('front.contact.message.save') }}" method="POST">
+                        @csrf
+                        <input type="text" class="mail_text @error('name') border border-danger @enderror " placeholder="Full Name" id="name" value="{{ old('name') }}" name="name">
+                        <div id="name_error" class="text-danger"> @error('name')
+                            {{ $message }}
+                            @enderror
+                        </div>
+                        <input type="text" class="mail_text @error('company_name') border border-danger @enderror " placeholder="Company Name" id="company_name" value="{{ old('company_name') }}" name="company_name">
+                        <div id="company_name_error" class="text-danger"> @error('company_name')
+                            {{ $message }}
+                            @enderror
+                        </div>
+                        <input type="text" class="mail_text @error('phone') border border-danger @enderror " placeholder="Phone" id="phone" value="{{ old('phone') }}" name="phone">
+                        <div id="c_code_error" class="text-danger"> @error('email')
+                            {{ $message }}
+                            @enderror
+                        </div>
+                        <div id="phone_error" class="text-danger"> @error('phone')
+                            {{ $message }}
+                            @enderror
+                        </div>
+                        <input type="text" class="mail_text @error('email') border border-danger @enderror" placeholder="Email" id="email" name="email" value="{{ old('email') }}">
+                        <div id="email_error" class="text-danger"> @error('email')
+                            {{ $message }}
+                            @enderror
+                        </div>
+
+                        <input type="text" class="mail_text @error('address') border border-danger @enderror " placeholder="Address" id="address" value="{{ old('address') }}" name="address">
+                        <div id="address_error" class="text-danger"> @error('address')
+                            {{ $message }}
+                            @enderror
+                        </div>
+                        <textarea class="massage-bt @error('message') border border-danger @enderror " placeholder="Massage" rows="5" id="message" name="message">{{ old('message') }}</textarea>
+                        <div id="message_error" class="text-danger"> @error('message')
+                            {{ $message }}
+                            @enderror
+                        </div>
+                        <div class="send_bt"><button type="submit">SEND</button></div>
+                    </form>
                     </div>
                 </div>
                 @if ($ContactSetting)
@@ -378,7 +405,25 @@ $home_slider_image = SiteSetting::getSiteSettings('home_slider_image');
 
 @section('js')
 <script src="{{ asset('assets/front/js/slick.min.js') }}"></script>
+<script src="{{ asset('assets/front/js/intlTelInput.min.js') }}"></script>
 
+<script>
+    const input = document.querySelector("#phone");
+    var iti = window.intlTelInput(input, {
+        utilsScript: "{{ asset('assets/front/js/utils.js') }}",
+        hiddenInput: function(telInputName) {
+            return {
+                phone: "phone_full",
+                country: "c_code"
+            };
+        }
+    });
+    input.addEventListener("countrychange", function() {
+        if (iti.getSelectedCountryData() && iti.isValidNumber()) {
+            $('#c_code_error').html('');
+        }
+    });
+</script>
 <script>
     $(document).ready(function() {
         $('.carousel-sister-logo').slick({
@@ -399,10 +444,17 @@ $home_slider_image = SiteSetting::getSiteSettings('home_slider_image');
                     required: true,
                     email: true
                 },
+                c_code: {
+                    required: true,
+                },
                 phone: {
+                    required: true,
                     number: true
                 },
-                subject: {
+                address: {
+                    required: true,
+                },
+                company_name: {
                     required: true,
                 },
                 message: {
@@ -418,12 +470,16 @@ $home_slider_image = SiteSetting::getSiteSettings('home_slider_image');
                     email: 'Enter a valid email',
                 },
                 phone: {
+                    required: 'This field is required',
                     number: 'Please enter a valid phone number.',
                 },
-                subject: {
+                address: {
                     required: 'This field is required',
                 },
                 message: {
+                    required: 'This field is required',
+                },
+                company_name: {
                     required: 'This field is required',
                 }
             },
@@ -438,7 +494,11 @@ $home_slider_image = SiteSetting::getSiteSettings('home_slider_image');
                 $(element).removeClass('border border-danger');
             },
             submitHandler: function(form) {
-                form.submit();
+                if (iti.isValidNumber()) {
+                    form.submit();
+                } else {
+                    $('#c_code_error').html('Please select a contry code or enter a valid phone number.');
+                }
             }
         });
     });
