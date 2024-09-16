@@ -65,12 +65,11 @@ $categories = Category::getCategory();
                     </ul>
                     @endif
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link {{ Route::currentRouteName() == 'front.contact' ? 'active' : '' }}" href="{{ route('front.contact') }}">Contact Us</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Route::currentRouteName() == 'front.services' ? 'active' : '' }}" href="{{ route('front.services') }}">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::currentRouteName() == 'front.contact' ? 'active' : '' }}" href="{{ route('front.contact') }}">Contact Us</a>
                 </li>
             </ul>
 

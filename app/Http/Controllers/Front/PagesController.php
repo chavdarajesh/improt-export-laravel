@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\ContactSetting;
 use App\Models\HomeSlider;
 use App\Models\Newsletter;
+use App\Models\Service;
 use App\Models\SistersCompanyLogo;
 use App\Models\Subcategory;
 use App\Models\SubSubCategory;
@@ -28,7 +29,8 @@ class PagesController extends Controller
     }
     public function services()
     {
-        return view('front.pages.services');
+        $Services = Service::where('status', 1)->orderBy('id', 'DESC')->get();
+        return view('front.pages.services',['Services' => $Services]);
     }
 
     public function term_and_condition()

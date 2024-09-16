@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\HomeSliderController as AdminHomeSliderController
 use App\Http\Controllers\Admin\SubcategoryController as AdminSubcategoryController;
 use App\Http\Controllers\Admin\SubSubCategoryController as AdminSubSubCategoryController;
 use App\Http\Controllers\Admin\LogoController as AdminLogoController;
+use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
@@ -157,6 +158,18 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'is_a
      Route::post('/sisterscompanylogo/status/toggle', [AdminLogoController::class, 'statusToggle'])->name('admin.sisterscompanylogo.status.toggle');
      Route::post('/sisterscompanylogo/delete/{id}', [AdminLogoController::class, 'delete'])->name('admin.sisterscompanylogo.delete');
      // sisterscompanylogo Modlue end
+
+     // services Modlue start
+     Route::any('/services', [AdminServiceController::class, 'index'])->name('admin.services.index');
+     Route::get('/services/create', [AdminServiceController::class, 'create'])->name('admin.services.create');
+     Route::post('/services/save', [AdminServiceController::class, 'save'])->name('admin.services.save');
+     Route::get('/services/view/{id}', [AdminServiceController::class, 'view'])->name('admin.services.view');
+     Route::get('/services/edit/{id}', [AdminServiceController::class, 'edit'])->name('admin.services.edit');
+     Route::put('/services/update', [AdminServiceController::class, 'update'])->name('admin.services.update');
+     Route::post('/services/status/toggle', [AdminServiceController::class, 'statusToggle'])->name('admin.services.status.toggle');
+     Route::post('/services/delete/{id}', [AdminServiceController::class, 'delete'])->name('admin.services.delete');
+     Route::post('/services/delete-subcat', [AdminServiceController::class, 'deleteSubcat'])->name('admin.services.delete.subcat');
+     // services Modlue end
 });
 // Admin route end
 

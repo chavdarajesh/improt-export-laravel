@@ -17,7 +17,19 @@
                         <input type="hidden" name="old_image" value="{{ $HomeSlider['image'] }}">
 
                         <div class="row">
-
+                        <div class="mb-3 col-md-6">
+                                    <label for="image" class="form-label">Cover Image</label>
+                                    <input class="form-control" type="file" id="image" name="image">
+                                    <div id="image_error" class="text-danger"> @error('image')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <img src="{{ $HomeSlider['image'] ? asset($HomeSlider['image']) : asset('assets/admin/img/avatars/dummy-image-square.jpg') }}"
+                                        alt="HomeSlider Image" class="d-block rounded" height="100" width="100"
+                                        id="uploadedAvatar" />
+                                </div>
                             <div class="mb-3 col-md-12">
                                 <label for="title" class="form-label">title</label>
                                 <input class="form-control @error('title') is-invalid @enderror" type="text"
@@ -53,10 +65,27 @@
 @section('js')
 <script src="{{ asset('assets/admin/js/jquery.validate.min.js') }}"></script>
 <script>
+     function readURL(input) {
+            if (input.files && input.files[0]) {
+                if (input.files[0].type.startsWith('image/')) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.querySelector("#uploadedAvatar").setAttribute("src", e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    $('#image_error').html('Allowed JPG, GIF or PNG.')
+                    $('#upload').val('');
+                }
+            }
+        }
     $(document).ready(function() {
         var imageRequired = $('#old_image').val() ? false : true;
         $('#form').validate({
             rules: {
+                image: {
+                        required: imageRequired,
+                    },
                 title: {
                     required: true,
                 },

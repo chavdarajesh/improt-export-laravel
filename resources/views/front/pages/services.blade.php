@@ -4,52 +4,35 @@
 
 @stop
 @section('content')
- <!-- services section start -->
- <div class="services_section layout_padding">
-         <div class="container">
-            <h1 class="services_taital">What We Do</h1>
-            <p class="about_text">It is a long established fact that a reader will be distracted by the readable content of a page when</p>
-            <div class="services_section_2">
-               <div class="row">
-                  <div class="col-lg-4">
-                     <div class="icon_box">
-                        <div class="icon_1"><img src="{{ asset('assets/front/images/icon-1.png') }}"></div>
-                     </div>
-                     <h4 class="selection_text">Selection of Business</h4>
-                     <p class="ipsum_text">There are many variations of passages of Lorem Ipsum available, but the form, by injected humour, or randomised</p>
-                     <div class="icon_box">
-                        <div class="icon_1"><img src="{{ asset('assets/front/images/icon-4.png') }}"></div>
-                     </div>
-                     <h4 class="selection_text">Securities Transactions</h4>
-                     <p class="ipsum_text">There are many variations of passages of Lorem Ipsum available, but the form, by injected humour, or randomised</p>
-                  </div>
-                  <div class="col-lg-4">
-                     <div class="icon_box">
-                        <div class="icon_1"><img src="{{ asset('assets/front/images/icon-2.png') }}"></div>
-                     </div>
-                     <h4 class="selection_text">Research and Analytics</h4>
-                     <p class="ipsum_text">There are many variations of passages of Lorem Ipsum available, but the form, by injected humour, or randomised</p>
-                     <div class="icon_box">
-                        <div class="icon_1"><img src="{{ asset('assets/front/images/icon-5.png') }}"></div>
-                     </div>
-                     <h4 class="selection_text">Advisory Activities</h4>
-                     <p class="ipsum_text">There are many variations of passages of Lorem Ipsum available, but the form, by injected humour, or randomised</p>
-                  </div>
-                  <div class="col-lg-4">
-                     <div class="icon_box">
-                        <div class="icon_1"><img src="{{ asset('assets/front/images/icon-3.png') }}"></div>
-                     </div>
-                     <h4 class="selection_text">Business Plans</h4>
-                     <p class="ipsum_text">There are many variations of passages of Lorem Ipsum available, but the form, by injected humour, or randomised</p>
-                     <div class="icon_box">
-                        <div class="icon_1"><img src="{{ asset('assets/front/images/icon-6.png') }}"></div>
-                     </div>
-                     <h4 class="selection_text">Management and Asset</h4>
-                     <p class="ipsum_text">There are many variations of passages of Lorem Ipsum available, but the form, by injected humour, or randomised</p>
-                  </div>
-               </div>
+<!-- services section start -->
+<div class="services_section layout_padding">
+    <div class="container">
+        <h1 class="services_taital">What We Do</h1>
+        <p class="about_text">It is a long established fact that a reader will be distracted by the readable content of a page when</p>
+        @if (!$Services->isEmpty())
+        <div class="about_section_2">
+        @foreach ($Services as $key => $Service)
+            <div class="row mb-3">
+                <div class="col-lg-6">
+                    <div class="about_image"><img src="{{ $Service->image ? asset($Service->image) : asset('assets/front/images/about-img.png')}}"></div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mt-5">
+                        <p class="lorem_text">{!!   substr($Service->description, 0, 250) !!}</p>
+                        <div class="read_bt"><a data-toggle="collapse" href="#collapseExample-{{$key}}" role="button" aria-expanded="false" aria-controls="collapseExample-{{$key}}">Read More</a></div>
+
+                        <div class="collapse lorem_text mt-3 " id="collapseExample-{{$key}}">
+                            <div class="card card-body">
+                            {!!   substr($Service->description,250) !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-      <!-- services section end -->
+        @endforeach
+        </div>
+        @endif
+    </div>
+</div>
+<!-- services section end -->
 @stop

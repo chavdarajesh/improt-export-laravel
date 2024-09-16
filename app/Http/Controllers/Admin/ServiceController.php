@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\HomeSlider;
+use App\Models\Service;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class HomeSliderController extends Controller
+class ServiceController extends Controller
 {
     //
     public function index(Request $request)
@@ -28,18 +28,18 @@ class HomeSliderController extends Controller
             $searchValue = $search_arr['value']; // Search value
 
             // Total records
-            $totalRecords = HomeSlider::select('count(*) as allcount')->count();
+            $totalRecords = Service::select('count(*) as allcount')->count();
             $totalRecordswithFilter =
-                HomeSlider::select('count(*) as allcount')
+                Service::select('count(*) as allcount')
                 ->where('id', 'like', '%' . $searchValue . '%')
-                ->orWhere('title', 'like', '%' . $searchValue . '%')
+                ->orWhere('description', 'like', '%' . $searchValue . '%')
                 ->orWhere('status', 'like', '%' . $searchValue . '%')
                 ->orWhere('created_at', 'like', '%' . $searchValue . '%')
                 ->count();
 
             // Get records, also we have included search filter as well
-            $records = HomeSlider::where('id', 'like', '%' . $searchValue . '%')
-                ->orWhere('title', 'like', '%' . $searchValue . '%')
+            $records = Service::where('id', 'like', '%' . $searchValue . '%')
+                ->orWhere('description', 'like', '%' . $searchValue . '%')
                 ->orWhere('status', 'like', '%' . $searchValue . '%')
                 ->orWhere('created_at', 'like', '%' . $searchValue . '%')
 
@@ -52,11 +52,11 @@ class HomeSliderController extends Controller
             $data_arr = array();
 
             foreach ($records as $row) {
-                $html = '<a href="' . route("admin.homeslider.view", $row->id) . '"> <button type="button"
+                $html = '<a href="' . route("admin.services.view", $row->id) . '"> <button type="button"
                             class="btn btn-icon btn-outline-info">
                             <i class="bx bx-show"></i>
                         </button></a>
-                    <a href="' . route("admin.homeslider.edit", $row->id) . '"> <button type="button"
+                    <a href="' . route("admin.services.edit", $row->id) . '"> <button type="button"
                             class="btn btn-icon btn-outline-warning">
                             <i class="bx bxs-edit"></i>
                         </button></a>
@@ -69,7 +69,7 @@ class HomeSliderController extends Controller
                     <div class="modal fade" id="delete-modal-' . $row->id . '"
                         tabindex="-1" style="display: none;" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
-                        <form action="' . route("admin.homeslider.delete", $row->id) . '"
+                        <form action="' . route("admin.services.delete", $row->id) . '"
                             method="post">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -93,7 +93,7 @@ class HomeSliderController extends Controller
                     </div>';
                 $data_arr[] = array(
                     "id" => '<strong>' . $row->id . '</strong>',
-                    "title" => strlen($row->title) > 25 ? substr($row->title, 0, 25) . '..' : $row->title,
+                    "description" => strlen($row->description) > 25 ? substr($row->description, 0, 25) . '..' : $row->description,
                     "status" => ' <div class="d-flex justify-content-center align-items-center form-check form-switch"><input data-id="' . $row->id . '" style="width: 60px;height: 25px;" class="form-check-input status-toggle" type="checkbox" id="flexSwitchCheckDefault" ' . ($row->status ? "checked" : "") . '  ></div>',
                     "created_at" => $row->created_at ? Carbon::parse($row->created_at)->setTimezone('Asia/Kolkata')->toDateTimeString() : '',
                     "actions" => $html,
@@ -109,29 +109,31 @@ class HomeSliderController extends Controller
 
             echo json_encode($response);
         } else {
-            return view('admin.homeslider.index');
+            return view('admin.services.index');
         }
     }
+
     public function create()
     {
-        return view('admin.homeslider.create');
+        return view('admin.services.create');
     }
     public function save(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'image' => 'required|file|image|mimes:jpeg,png,jpg,gif,webp|max:5000',
-        ]);
-        $HomeSlider = new HomeSlider();
-        $HomeSlider->title = $request['title'];
-        $HomeSlider->description = $request['description'];
-        $HomeSlider->status = 1;
+        $rules = [
+            'description' =>  'required',
+            'image' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:5000',
+        ];
+
+        $request->validate($rules);
+
+        $Service = new Service();
+        $Service->description = $request['description'];
+        $Service->status = 1;
         if ($request->image) {
             if ($request->old_image && file_exists(public_path($request->old_image))) {
                 unlink(public_path($request->old_image));
             }
-            $folderPath = public_path('custom-assets/admin/uplode/images/homeslider/images/');
+            $folderPath = public_path('custom-assets/admin/uplode/images/services/images/');
             if (!file_exists($folderPath)) {
                 mkdir($folderPath, 0777, true);
             }
@@ -139,49 +141,48 @@ class HomeSliderController extends Controller
             $imageoriginalname = str_replace(" ", "-", $file->getClientOriginalName());
             $imageName = rand(1000, 9999) . time() . $imageoriginalname;
             $file->move($folderPath, $imageName);
-            $HomeSlider->image = 'custom-assets/admin/uplode/images/homeslider/images/' . $imageName;
+            $Service->image = 'custom-assets/admin/uplode/images/services/images/' . $imageName;
         }
-        $HomeSlider->save();
-        if ($HomeSlider) {
-            return redirect()->route('admin.homeslider.index')->with('message', 'HomeSlider Added Sucssesfully..');
+        $Service->save();
+        if ($Service) {
+            return redirect()->route('admin.services.index')->with('message', 'Service Added Sucssesfully..');
         } else {
             return redirect()->back()->with('error', 'Somthing Went Wrong..');
         }
     }
     public function view($id)
     {
-        $HomeSlider = HomeSlider::find($id);
-        if ($HomeSlider) {
-            return view('admin.homeslider.view', ['HomeSlider' => $HomeSlider]);
+        $Service = Service::find($id);
+        if ($Service) {
+            return view('admin.services.view', ['Service' => $Service]);
         } else {
-            return redirect()->back()->with('error', 'HomeSlider Not Found..!');
+            return redirect()->back()->with('error', 'Service Not Found..!');
         }
     }
 
     public function edit($id)
     {
-        $HomeSlider = HomeSlider::find($id);
-        if ($HomeSlider) {
-
-            return view('admin.homeslider.edit', ['HomeSlider' => $HomeSlider]);
+        $Service = Service::find($id);
+        if ($Service) {
+            return view('admin.services.edit', ['Service' => $Service]);
         } else {
-            return redirect()->back()->with('error', 'HomeSlider Not Found..!');
+            return redirect()->back()->with('error', 'Service Not Found..!');
         }
     }
 
     public function update(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'image' => 'required_if:old_image,null|file|image|mimes:jpeg,png,jpg,gif,webp|max:5000',
-        ]);
-        $HomeSlider = HomeSlider::find($request->id);
-        if ($HomeSlider) {
-            $HomeSlider->title = $request['title'];
-            $HomeSlider->description = $request['description'];
+        $rules = [
+            'description' =>  'required',
+            'image' => 'file|image|mimes:jpeg,png,jpg,gif|max:5000',
+        ];
+        $request->validate($rules);
+
+        $Service = Service::find($request->id);
+        if ($Service) {
+            $Service->description = $request['description'];
             if ($request->image) {
-                $folderPath = public_path('custom-assets/admin/uplode/images/homeslider/images/');
+                $folderPath = public_path('custom-assets/admin/uplode/images/services/images/');
                 if (!file_exists($folderPath)) {
                     mkdir($folderPath, 0777, true);
                 }
@@ -189,55 +190,53 @@ class HomeSliderController extends Controller
                 $imageoriginalname = str_replace(" ", "-", $file->getClientOriginalName());
                 $imageName = rand(1000, 9999) . time() . $imageoriginalname;
                 $file->move($folderPath, $imageName);
-                $HomeSlider->image = 'custom-assets/admin/uplode/images/homeslider/images/' . $imageName;
+                $Service->image = 'custom-assets/admin/uplode/images/services/images/' . $imageName;
                 if ($request->old_image && file_exists(public_path($request->old_image))) {
                     unlink(public_path($request->old_image));
                 }
             }
-            $HomeSlider->update();
-
-            if ($HomeSlider) {
-                return redirect()->route('admin.homeslider.index')->with('message', 'HomeSlider Updated Sucssesfully..');
+            $Service->update();
+            if ($Service) {
+                return redirect()->route('admin.services.index')->with('message', 'Service Updated Sucssesfully..');
             } else {
                 return redirect()->back()->with('error', 'Somthing Went Wrong..');
             }
         } else {
-            return redirect()->back()->with('error', 'HomeSlider Not Found..!');
+            return redirect()->back()->with('error', 'Service Not Found..!');
         }
     }
 
     public function delete($id)
     {
         if ($id) {
-            $HomeSlider = HomeSlider::find($id);
-            if ($HomeSlider->image && file_exists(public_path($HomeSlider->image))) {
-                unlink(public_path($HomeSlider->image));
+            $Service = Service::find($id);
+            if ($Service->image && file_exists(public_path($Service->image))) {
+                unlink(public_path($Service->image));
             }
-            $HomeSlider = $HomeSlider->delete();
-            if ($HomeSlider) {
-                return redirect()->route('admin.homeslider.index')->with('message', 'HomeSlider Deleted Sucssesfully..');
+            $Service = $Service->delete();
+            if ($Service) {
+                return redirect()->route('admin.services.index')->with('message', 'Service Deleted Sucssesfully..');
             } else {
                 return redirect()->back()->with('error', 'Somthing Went Wrong..!');
             }
         } else {
-            return redirect()->back()->with('error', 'HomeSlider Not Found..!');
+            return redirect()->back()->with('error', 'Service Not Found..!');
         }
     }
-
 
     public function statusToggle(Request $request)
     {
         if ($request->id) {
-            $HomeSlider = HomeSlider::find($request->id);
-            $HomeSlider->status = $request->status;
-            $HomeSlider = $HomeSlider->update();
-            if ($HomeSlider) {
+            $Service = Service::find($request->id);
+            $Service->status = $request->status;
+            $Service = $Service->update();
+            if ($Service) {
                 return response()->json(['success' => 'Status Updated Successfully.']);
             } else {
                 return response()->json(['error' => 'Somthing Went Wrong..!']);
             }
         } else {
-            return response()->json(['error' => 'HomeSlider Not Found..!']);
+            return response()->json(['error' => 'Service Not Found..!']);
         }
     }
 }

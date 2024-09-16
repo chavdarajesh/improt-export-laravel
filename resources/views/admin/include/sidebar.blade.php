@@ -1,7 +1,7 @@
 @php $current_route_name = Route::currentRouteName();
         use App\Models\SiteSetting;
         $headerLogo = SiteSetting::getSiteSettings('header_logo');
-@endphp ?>
+@endphp
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
         <a href="{{ route('admin.dashboard') }}" class="app-brand-link">
@@ -65,6 +65,13 @@
             <a href="{{ route('admin.subsubcategorys.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-category-alt"></i>
                 <div>Sub Sub Category</div>
+            </a>
+        </li>
+        <li
+            class="menu-item  {{ $current_route_name == 'admin.services.index' || $current_route_name == 'admin.services.create' || $current_route_name == 'admin.services.edit' || $current_route_name == 'admin.services.view' ? 'active' : '' }}">
+            <a href="{{ route('admin.services.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-category-alt"></i>
+                <div>Services</div>
             </a>
         </li>
 

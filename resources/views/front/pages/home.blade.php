@@ -14,10 +14,13 @@ $home_slider_image = SiteSetting::getSiteSettings('home_slider_image');
     .banner_section {
         width: 100%;
         float: left;
-        background-image: url("{{ isset($home_slider_image) && $home_slider_image && $home_slider_image->value && $home_slider_image->value != null ? asset($home_slider_image->value) : asset('assets/front/images/banner-bg.png') }}");
+        /* background-image: url("{{ isset($home_slider_image) && $home_slider_image && $home_slider_image->value && $home_slider_image->value != null ? asset($home_slider_image->value) : asset('assets/front/images/banner-bg.png') }}"); */
         height: auto;
-        background-size: cover !important; /* Fits the image to cover the entire area without preserving aspect ratio */
-        background-position: center !important; /* Ensure the image is centered */
+        /* background-size: cover !important; */
+        /* Fits the image to cover the entire area without preserving aspect ratio */
+        /* background-position: center !important; */
+        /* Ensure the image is centered */
+        background: unset;
     }
 
     .map-responsive iframe {
@@ -34,10 +37,11 @@ $home_slider_image = SiteSetting::getSiteSettings('home_slider_image');
         margin: 10px;
     }
 
-   .carousel-sister-logo .slick-slide img {
+    .carousel-sister-logo .slick-slide img {
         width: 100%;
         border: 2px solid #fff;
     }
+
     .iti.iti--allow-dropdown.iti--show-flags.iti--inline-dropdown {
         width: 100%;
         float: left;
@@ -53,42 +57,42 @@ $home_slider_image = SiteSetting::getSiteSettings('home_slider_image');
 @stop
 @section('content')
 @if (!$HomeSlider->isEmpty())
-<!--banner section start -->
-<div class="banner_section layout_padding">
-    <div class="container-fluid">
-        <section class="slide-wrapper">
-            <div class="container-fluid">
-                <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators">
-                        @foreach ($HomeSlider as $key => $slider)
-                        <li data-target="#myCarousel" data-slide-to="{{$key}}" class=" {{ $key == 0 ? 'active' : '' }} "></li>
-                        @endforeach
-                    </ol>
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner">
-
-                        @foreach ($HomeSlider as $key => $slider)
-                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}  ">
-                            <div class="container">
-                                <div class="banner_main">
-                                    <h1 class="banner_taital">{{$slider->title}}</h1>
-                                    <p class="banner_text">{{$slider->description}}</p>
-                                    <div class="btn_main">
-                                        <div class="contact_bt active "><a href="{{route('front.contact')}}">Contact Us</a></div>
-                                        <div class="readmore_bt"><a href="{{route('front.about')}}">Read More</a></div>
-                                    </div>
-                                </div>
-                            </div>
+<!-- Carousel Start -->
+<div class="banner_section p-0">
+    <section class="slide-wrapper">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                @foreach ($HomeSlider as $key => $slider)
+                <li data-target="#myCarousel" data-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}"></li>
+                @endforeach
+            </ol>
+            <div class="carousel-inner">
+                @foreach ($HomeSlider as $key => $slider)
+                <div class="carousel-item  {{ $key == 0 ? 'active' : '' }}">
+                    <img class="d-block w-100" src="{{ asset($slider->image) }}" alt="First slide">
+                    <div class="carousel-caption d-none d-md-block banner_main">
+                        <h5 class="banner_taital">{{$slider->title}}</h5>
+                        <p class="banner_text">{{$slider->description}}</p>
+                        <div class="btn_main">
+                            <div class="contact_bt active "><a href="{{route('front.contact')}}">Contact Us</a></div>
+                            <div class="readmore_bt"><a href="{{route('front.about')}}">Read More</a></div>
                         </div>
-                        @endforeach
                     </div>
                 </div>
+                @endforeach
             </div>
-        </section>
-    </div>
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </section>
 </div>
-<!--banner section end -->
+<!-- Carousel End -->
 @endif
 <!--about section start -->
 <div class="about_section layout_padding">
@@ -209,45 +213,45 @@ $home_slider_image = SiteSetting::getSiteSettings('home_slider_image');
             <div class="row">
                 <div class="col-md-6">
                     <div class="contact_main">
-                    <form id="form" action="{{ route('front.contact.message.save') }}" method="POST">
-                        @csrf
-                        <input type="text" class="mail_text @error('name') border border-danger @enderror " placeholder="Full Name" id="name" value="{{ old('name') }}" name="name">
-                        <div id="name_error" class="text-danger"> @error('name')
-                            {{ $message }}
-                            @enderror
-                        </div>
-                        <input type="text" class="mail_text @error('company_name') border border-danger @enderror " placeholder="Company Name" id="company_name" value="{{ old('company_name') }}" name="company_name">
-                        <div id="company_name_error" class="text-danger"> @error('company_name')
-                            {{ $message }}
-                            @enderror
-                        </div>
-                        <input type="text" class="mail_text @error('phone') border border-danger @enderror " placeholder="Phone" id="phone" value="{{ old('phone') }}" name="phone">
-                        <div id="c_code_error" class="text-danger"> @error('email')
-                            {{ $message }}
-                            @enderror
-                        </div>
-                        <div id="phone_error" class="text-danger"> @error('phone')
-                            {{ $message }}
-                            @enderror
-                        </div>
-                        <input type="text" class="mail_text @error('email') border border-danger @enderror" placeholder="Email" id="email" name="email" value="{{ old('email') }}">
-                        <div id="email_error" class="text-danger"> @error('email')
-                            {{ $message }}
-                            @enderror
-                        </div>
+                        <form id="form" action="{{ route('front.contact.message.save') }}" method="POST">
+                            @csrf
+                            <input type="text" class="mail_text @error('name') border border-danger @enderror " placeholder="Full Name" id="name" value="{{ old('name') }}" name="name">
+                            <div id="name_error" class="text-danger"> @error('name')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                            <input type="text" class="mail_text @error('company_name') border border-danger @enderror " placeholder="Company Name" id="company_name" value="{{ old('company_name') }}" name="company_name">
+                            <div id="company_name_error" class="text-danger"> @error('company_name')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                            <input type="text" class="mail_text @error('phone') border border-danger @enderror " placeholder="Phone" id="phone" value="{{ old('phone') }}" name="phone">
+                            <div id="c_code_error" class="text-danger"> @error('email')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                            <div id="phone_error" class="text-danger"> @error('phone')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                            <input type="text" class="mail_text @error('email') border border-danger @enderror" placeholder="Email" id="email" name="email" value="{{ old('email') }}">
+                            <div id="email_error" class="text-danger"> @error('email')
+                                {{ $message }}
+                                @enderror
+                            </div>
 
-                        <input type="text" class="mail_text @error('address') border border-danger @enderror " placeholder="Address" id="address" value="{{ old('address') }}" name="address">
-                        <div id="address_error" class="text-danger"> @error('address')
-                            {{ $message }}
-                            @enderror
-                        </div>
-                        <textarea class="massage-bt @error('message') border border-danger @enderror " placeholder="Massage" rows="5" id="message" name="message">{{ old('message') }}</textarea>
-                        <div id="message_error" class="text-danger"> @error('message')
-                            {{ $message }}
-                            @enderror
-                        </div>
-                        <div class="send_bt"><button type="submit">SEND</button></div>
-                    </form>
+                            <input type="text" class="mail_text @error('address') border border-danger @enderror " placeholder="Address" id="address" value="{{ old('address') }}" name="address">
+                            <div id="address_error" class="text-danger"> @error('address')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                            <textarea class="massage-bt @error('message') border border-danger @enderror " placeholder="Massage" rows="5" id="message" name="message">{{ old('message') }}</textarea>
+                            <div id="message_error" class="text-danger"> @error('message')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                            <div class="send_bt"><button type="submit">SEND</button></div>
+                        </form>
                     </div>
                 </div>
                 @if ($ContactSetting)

@@ -347,7 +347,7 @@ button {
 }
 
 .carousel-indicators {
-    bottom: -120px;
+    bottom: -50px;
 }
 .carousel-indicators li {
     width: 20px;
@@ -460,7 +460,7 @@ button {
 .services_section{
     width: 100%;
     float: left;
-    background-image: url(../images/services-bg.png);
+    /* background-image: url(../images/services-bg.png); */
     background-size: 100%;
     background-repeat: no-repeat;
 }
