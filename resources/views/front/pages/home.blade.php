@@ -71,8 +71,12 @@ $home_slider_image = SiteSetting::getSiteSettings('home_slider_image');
                 <div class="carousel-item  {{ $key == 0 ? 'active' : '' }}">
                     <img class="d-block w-100" src="{{ asset($slider->image) }}" alt="First slide">
                     <div class="carousel-caption d-none d-md-block banner_main">
+                        @if($slider->title)
                         <h5 class="banner_taital">{{$slider->title}}</h5>
+                        @endif
+                        @if($slider->description)
                         <p class="banner_text">{{$slider->description}}</p>
+                        @endif
                         <div class="btn_main">
                             <div class="contact_bt active "><a href="{{route('front.contact')}}">Contact Us</a></div>
                             <div class="readmore_bt"><a href="{{route('front.about')}}">Read More</a></div>

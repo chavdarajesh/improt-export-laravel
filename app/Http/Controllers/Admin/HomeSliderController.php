@@ -119,8 +119,8 @@ class HomeSliderController extends Controller
     public function save(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'description' => 'required',
+            // 'title' => 'required',
+            // 'description' => 'required',
             'image' => 'required|file|image|mimes:jpeg,png,jpg,gif,webp|max:5000',
         ]);
         $HomeSlider = new HomeSlider();
@@ -172,8 +172,8 @@ class HomeSliderController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'description' => 'required',
+            // 'title' => 'required',
+            // 'description' => 'required',
             'image' => 'required_if:old_image,null|file|image|mimes:jpeg,png,jpg,gif,webp|max:5000',
         ]);
         $HomeSlider = HomeSlider::find($request->id);

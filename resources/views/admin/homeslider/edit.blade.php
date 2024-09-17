@@ -14,7 +14,7 @@
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="id" value="{{ $HomeSlider['id'] }}">
-                        <input type="hidden" name="old_image" value="{{ $HomeSlider['image'] }}">
+                        <input type="hidden" name="old_image" id="old_image" value="{{ $HomeSlider['image'] }}">
 
                         <div class="row">
                         <div class="mb-3 col-md-6">
@@ -81,17 +81,19 @@
         }
     $(document).ready(function() {
         var imageRequired = $('#old_image').val() ? false : true;
+        console.log(imageRequired);
+
         $('#form').validate({
             rules: {
                 image: {
                         required: imageRequired,
                     },
-                title: {
-                    required: true,
-                },
-                description: {
-                    required: true,
-                },
+                // title: {
+                //     required: true,
+                // },
+                // description: {
+                //     required: true,
+                // },
             },
             errorPlacement: function(error, element) {
                 error.addClass('invalid-feedback');

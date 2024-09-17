@@ -61,12 +61,12 @@
                 image: {
                         required: true,
                     },
-                title: {
-                    required: true,
-                },
-                description: {
-                    required: true,
-                },
+                // title: {
+                //     required: true,
+                // },
+                // description: {
+                //     required: true,
+                // },
             },
             errorPlacement: function(error, element) {
                 error.addClass('invalid-feedback');
