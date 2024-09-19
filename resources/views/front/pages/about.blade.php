@@ -108,7 +108,7 @@
         </div> -->
     </div>
     <div class="d-flex justify-content-center flex-column align-items-center mx-5 px-5">
-        <img src="{{asset('custom-assets/front/images/about-us.jpeg')}}" alt="">
+        <img src="{{asset('custom-assets/front/images/about-us.png')}}" alt="">
         <h1 class="mt-3">।। श्री महावीराय नमः ।।</h1>
         <hr>
         <h2>
@@ -119,7 +119,7 @@
             मंगलाणं च सव्वेसिं, पढ़मं हवइ मंगलम ।। <br>
         </h2>
         <hr>
-        <h4>From the Earth to Your Table
+        <h3>From the Earth to Your Table
             <br><br>
             Started with humble beginnings in 1981 from a small town in the heart of Central India, Barnagar (Madhya Pradesh), Jain Agriventures was founded by Shree Rajkumar Bilala, a visionary who sowed the seeds of hope and passion into agriculture.
             With quality and trust as its guiding mantra, this seed sown by Shree Rajkumar Bilala has blossomed into a thriving enterprise, expanding its branches into agritrading ( domestic and international ) , warehousing, and agriprocessing industries . Jain Agriventures is an umbrella that proudly houses a family of businesses, including Jain Traders, M/s Manoj kumar Rajkumar Jain , Garvit Enterprises,
@@ -137,7 +137,7 @@
             Meanwhile, Jain Warehouses and Jain Coldstorages are dedicated to offering the best storage solutions for farmers, ensuring their goods are stored in optimal conditions, allowing them to secure the best possible prices in the market.
             <br><br>
             At Jain Agriventures, we are united by one mission: to bring the finest agricultural products from the earth to your table, while supporting the backbone of our nation's economy—our farmers.
-        </h4>
+        </h3>
     </div>
     <div class="container pt-5">
         <div class="row">
