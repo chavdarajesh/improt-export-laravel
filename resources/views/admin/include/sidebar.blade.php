@@ -7,7 +7,7 @@
         <a href="{{ route('admin.dashboard') }}" class="app-brand-link">
 
             <span class="app-brand-text demo menu-text fw-bolder ms-2"><img width="150"
-                    src="{{ isset($headerLogo) && isset($headerLogo->value) && $headerLogo != null ? asset($headerLogo->value) : asset('custom-assets/admin/siteimages/logo/header-logo.png') }}"
+                    src="{{ isset($headerLogo) && isset($headerLogo->value) && $headerLogo != null ? asset($headerLogo->value) : asset('custom-assets/admin/siteimages/logo/header-logo.jpeg') }}"
                     alt="Header Logo"></span>
         </a>
 

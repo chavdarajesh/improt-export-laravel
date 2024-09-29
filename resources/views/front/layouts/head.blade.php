@@ -54,6 +54,9 @@
   margin-left: .1rem;
   margin-right: .1rem;
 }
+.logo img {
+    height: 50px;
+}
 </style>
  {{-- Custom --}}
  <link rel="stylesheet" type="text/css" href="{{ asset('custom-assets/front/css/toastr.min.css') }}">
