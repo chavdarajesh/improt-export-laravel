@@ -5,6 +5,21 @@ $loader = SiteSetting::getSiteSettings('loader');
 
 use App\Models\Category;
 $categories = Category::getCategory();
+
+$subCategoryId = null;
+$categoryId = null;
+
+use App\Models\SubSubCategory;
+if($current_route_name == 'admin.product.subcategory'){
+$subSubCategoryId= request()->route('id');
+$subCategoryId = SubSubCategory::getSubCategoryOfSubCategoryById($subSubCategoryId);
+$categoryId = SubSubCategory::getCategoryOfSubCategoryById($subSubCategoryId);
+}
+use App\Models\SubCategory;
+if($current_route_name == 'admin.product.category'){
+$subCategoryId= request()->route('id');
+$categoryId = SubCategory::getCategoryOfSubCategoryById($subCategoryId);
+}
 @endphp
 
 <!-- Spinner Start -->
@@ -20,60 +35,61 @@ $categories = Category::getCategory();
 
 <!--header section start -->
 <div class="header_section">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="logo"><a href="{{route('front.home')}}"><img src="{{ isset($headerLogo) && isset($headerLogo->value) && $headerLogo != null ? asset($headerLogo->value) : asset('custom-assets/admin/siteimages/logo/header-logo.jpeg') }}"></a></div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-hover">
+        <a class="navbar-brand" href="{{ route('front.home') }}"> <img src="{{ isset($headerLogo) && isset($headerLogo->value) && $headerLogo != null ? asset($headerLogo->value) : asset('custom-assets/admin/siteimages/logo/header-logo.jpeg') }}" class="header-logo" height="50" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHover" aria-controls="navbarHover" aria-expanded="false" aria-label="Navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link {{ Route::currentRouteName() == 'front.home' ? 'active' : '' }}" href="{{ route('front.home') }}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Route::currentRouteName() == 'front.about' ? 'active' : '' }}" href="{{ route('front.about') }}">About Us</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link {{ $categories && $categories->count() ? 'dropdown-toggle' : '' }} {{ Route::currentRouteName() == 'admin.product.category' || Route::currentRouteName() == 'admin.product.subcategory' ? 'active' : '' }}" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Product
-                    </a>
-                    @if($categories->count())
-                    <ul class="dropdown-menu p-0" aria-labelledby="navbarDropdownMenuLink">
-                        @foreach($categories as $category)
+        <div class="collapse navbar-collapse" id="navbarHover">
+            <div class="d-flex justify-content-center justify-content-lg-end justify-content-sm-center w-100">
+                <ul class="navbar-nav">
+                    <li class="nav-item {{ Route::currentRouteName() == 'front.home' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('front.home') }}">Home</a>
+                    </li>
+                    <li class="nav-item {{ Route::currentRouteName() == 'front.about' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('front.about') }}">About Us</a>
+                    </li>
 
-                        <li class="dropdown-submenu">
-                            <a class=" dropdown-item {{ $category->subcategories && $category->subcategories->count() ? 'dropdown-toggle' : '' }}" href="#">{{ $category->name }}</a>
-                            @if($category->subcategories->count())
-                            <ul class="dropdown-menu p-0">
-                                @foreach($category->subcategories as $subcategory)
-                                <li class="dropdown-submenu">
-                                    <a class=" dropdown-item {{  $subcategory->subsubcategories && $subcategory->subsubcategories->count() ? 'dropdown-toggle' : '' }}" href="{{route('admin.product.category',$subcategory->id)}}">{{ $subcategory->name }}</a>
-                                    @if($subcategory->subsubcategories->count())
-                                    <ul class="dropdown-menu p-0">
-                                        @foreach($subcategory->subsubcategories as $subSubCategory)
-                                        <li><a class=" dropdown-item" href="{{route('admin.product.subcategory',$subSubCategory->id)}}">{{$subSubCategory->name}}</a></li>
-                                        @endforeach
-                                    </ul>
-                                    @endif
-                                </li>
-                                @endforeach
+                    <li class="nav-item dropdown {{ Route::currentRouteName() == 'admin.product.category' || Route::currentRouteName() == 'admin.product.subcategory' ? 'active' : '' }}">
+                        <a class="nav-link {{ $categories && $categories->count() ? 'dropdown-toggle' : '' }}" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Product
+                        </a>
+                        @if($categories->count())
+                        <ul class="dropdown-menu dropdown-menu-items-product ">
+                            @foreach($categories as $category)
+                            <li><a class="dropdown-item {{ $category->subcategories && $category->subcategories->count() ? 'dropdown-toggle' : '' }} {{ Route::currentRouteName() == 'admin.product.subcategory' && request()->route('id') && $categoryId == $category->id ? 'active' : '' }} {{ Route::currentRouteName() == 'admin.product.category' && request()->route('id') && $categoryId == $category->id ? 'active' : '' }}" href="javascript:void(0);">{{ $category->name }}</a>
+                                @if($category->subcategories->count())
+                                <ul class="dropdown-menu">
+                                    @foreach($category->subcategories as $subcategory)
+                                    <li><a class="dropdown-item {{  $subcategory->subsubcategories && $subcategory->subsubcategories->count() ? 'dropdown-toggle' : '' }} {{ Route::currentRouteName() == 'admin.product.category' && request()->route('id') && request()->route('id') ==$subcategory->id ? 'active' : '' }} {{ Route::currentRouteName() == 'admin.product.subcategory' && request()->route('id') && $subCategoryId == $subcategory->id ? 'active' : '' }}" href="{{route('admin.product.category',$subcategory->id)}}">{{ $subcategory->name }}</a>
+                                        @if($subcategory->subsubcategories->count())
+                                        <ul class="dropdown-menu">
+                                            @foreach($subcategory->subsubcategories as $subSubCategory)
+                                            <li><a class="dropdown-item {{ Route::currentRouteName() == 'admin.product.subcategory' && request()->route('id') && request()->route('id') ==$subSubCategory->id  ? 'active' : '' }} " href="{{route('admin.product.subcategory',$subSubCategory->id)}}">{{$subSubCategory->name}}</a></li>
+                                            @endforeach
+                                        </ul>
+                                        @endif
+                                    </li>
+                                    @endforeach
+                                </ul>
+                                @endif
+                            </li>
+                            @endforeach
+                        </ul>
+                        @endif
+                    </li>
 
-                            </ul>
-                            @endif
-                        </li>
-                        @endforeach
-                    </ul>
-                    @endif
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Route::currentRouteName() == 'front.services' ? 'active' : '' }}" href="{{ route('front.services') }}">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Route::currentRouteName() == 'front.contact' ? 'active' : '' }}" href="{{ route('front.contact') }}">Contact Us</a>
-                </li>
-            </ul>
+                    <li class="nav-item {{ Route::currentRouteName() == 'front.services' ? 'active' : '' }}">
+                        <a class="nav-link " href="{{ route('front.services') }}">Services</a>
+                    </li>
+                    <li class="nav-item {{ Route::currentRouteName() == 'front.contact' ? 'active' : '' }}">
+                        <a class="nav-link " href="{{ route('front.contact') }}">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
 
         </div>
     </nav>
+
 </div>
 <!--header section end -->

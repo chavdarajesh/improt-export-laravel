@@ -85,6 +85,14 @@
     .col-sm-6 {
         display: flex;
     }
+    .director_taital {
+    width: 41%;
+    float: left;
+    font-size: 40px;
+    color: #0f0f0f;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}
 </style>
 @stop
 @section('content')
@@ -158,52 +166,26 @@
             </div>
         </div>
     </div>
+    @if (!$Directors->isEmpty())
+    <div class="container d-flex">
+        <h1 class="director_taital about_taital">Our Directors</h1>
+    </div>
     <div class="container pt-5 profile-container">
-        <div class="row">
+        <div class="row d-flex justify-content-center">
             <!-- Profile Card 1 -->
+            @foreach ($Directors as $key => $Director)
             <div class="col-md-3 col-sm-6 d-flex">
                 <div class="profile-card flex-fill">
                     <div>
-                        <img src="https://via.placeholder.com/100" alt="Profile Image" class="profile-image">
+                        <img src="{{ asset($Director->image) }}" alt="Profile Image" class="profile-image">
                     </div>
-                    <h5 class="profile-name">John Doe</h5>
-                    <p class="profile-description">A passionate web developer with expertise in full-stack technologies.</p>
+                    <h5 class="profile-name">{{$Director->name}}</h5>
+                    <p class="profile-description">{{$Director->description}}</p>
                 </div>
             </div>
-
-            <!-- Profile Card 2 -->
-            <div class="col-md-3 col-sm-6 d-flex">
-                <div class="profile-card flex-fill">
-                    <div>
-                        <img src="https://via.placeholder.com/100" alt="Profile Image" class="profile-image">
-                    </div>
-                    <h5 class="profile-name">Jane Smith</h5>
-                    <p class="profile-description">Specializes in front-end development and UI/UX design.</p>
-                </div>
-            </div>
-
-            <!-- Profile Card 3 -->
-            <div class="col-md-3 col-sm-6 d-flex">
-                <div class="profile-card flex-fill">
-                    <div>
-                        <img src="https://via.placeholder.com/100" alt="Profile Image" class="profile-image">
-                    </div>
-                    <h5 class="profile-name">Michael Lee</h5>
-                    <p class="profile-description">An expert in cloud computing and backend solutions.</p>
-                </div>
-            </div>
-
-            <!-- Profile Card 4 -->
-            <div class="col-md-3 col-sm-6 d-flex">
-                <div class="profile-card flex-fill">
-                    <div>
-                        <img src="https://via.placeholder.com/100" alt="Profile Image" class="profile-image">
-                    </div>
-                    <h5 class="profile-name">Emily Davis</h5>
-                    <p class="profile-description">Focused on mobile app development and progressive web apps.</p>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
+    @endif
 </div>
 @stop

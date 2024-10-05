@@ -53,6 +53,22 @@ $home_slider_image = SiteSetting::getSiteSettings('home_slider_image');
         margin-top: 20px;
         font-family: 'Roboto', sans-serif;
     }
+
+    .slider-image {
+        max-height: 700px;
+    }
+
+    .Subsidiries-image {
+        max-height: 200px;
+    }
+    .subsidiries_taital {
+    width: 44%;
+    float: left;
+    font-size: 40px;
+    color: #0f0f0f;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}
 </style>
 @stop
 @section('content')
@@ -69,19 +85,17 @@ $home_slider_image = SiteSetting::getSiteSettings('home_slider_image');
             <div class="carousel-inner">
                 @foreach ($HomeSlider as $key => $slider)
                 <div class="carousel-item  {{ $key == 0 ? 'active' : '' }}">
-                    <img class="d-block w-100" src="{{ asset($slider->image) }}" alt="First slide">
+                    <img class="d-block w-100 slider-image" src="{{ asset($slider->image) }}" alt="First slide">
+                    @if($slider->title || $slider->description)
                     <div class="carousel-caption d-none d-md-block banner_main">
-                        @if($slider->title)
                         <h5 class="banner_taital">{{$slider->title}}</h5>
-                        @endif
-                        @if($slider->description)
                         <p class="banner_text">{{$slider->description}}</p>
-                        @endif
                         <div class="btn_main">
                             <div class="contact_bt active "><a href="{{route('front.contact')}}">Contact Us</a></div>
                             <div class="readmore_bt"><a href="{{route('front.about')}}">Read More</a></div>
                         </div>
                     </div>
+                    @endif
                 </div>
                 @endforeach
             </div>
@@ -397,13 +411,14 @@ $home_slider_image = SiteSetting::getSiteSettings('home_slider_image');
 </div>
 @if(!$SistersCompanyLogos->isEmpty())
 <!-- testimonial section end -->
-<div class="testimonial_section layout_padding">
-
+<div class="container d-flex">
+        <h1 class="subsidiries_taital about_taital">Our Subsidiries</h1>
+    </div>
+<div class="blog_section">
     <div class="container my-5">
-        <h2>Our Sister Company</h2>
         <div class="carousel-sister-logo">
             @foreach($SistersCompanyLogos as $key =>$logo)
-            <div><img src="{{asset($logo->image)}}"></div>
+            <div><img class="Subsidiries-image" src="{{asset($logo->image)}}"></div>
             @endforeach
         </div>
     </div>

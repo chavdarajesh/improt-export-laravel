@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\SiteSettingController as AdminSiteSettingControll
 use App\Http\Controllers\Admin\NewsletterController as AdminNewsletterController;
 use App\Http\Controllers\Admin\NewsletterMailController as AdminNewsletterMailController;
 use App\Http\Controllers\Admin\HomeSliderController as AdminHomeSliderController;
+use App\Http\Controllers\Admin\DirectorController as AdminDirectorController;
 use App\Http\Controllers\Admin\SubcategoryController as AdminSubcategoryController;
 use App\Http\Controllers\Admin\SubSubCategoryController as AdminSubSubCategoryController;
 use App\Http\Controllers\Admin\LogoController as AdminLogoController;
@@ -170,6 +171,17 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'is_a
      Route::post('/services/delete/{id}', [AdminServiceController::class, 'delete'])->name('admin.services.delete');
      Route::post('/services/delete-subcat', [AdminServiceController::class, 'deleteSubcat'])->name('admin.services.delete.subcat');
      // services Modlue end
+
+       // director Modlue start
+    Route::any('/director', [AdminDirectorController::class, 'index'])->name('admin.director.index');
+    Route::get('/director/create', [AdminDirectorController::class, 'create'])->name('admin.director.create');
+    Route::post('/director/save', [AdminDirectorController::class, 'save'])->name('admin.director.save');
+    Route::get('/director/view/{id}', [AdminDirectorController::class, 'view'])->name('admin.director.view');
+    Route::get('/director/edit/{id}', [AdminDirectorController::class, 'edit'])->name('admin.director.edit');
+    Route::put('/director/update', [AdminDirectorController::class, 'update'])->name('admin.director.update');
+    Route::post('/director/status/toggle', [AdminDirectorController::class, 'statusToggle'])->name('admin.director.status.toggle');
+    Route::post('/director/delete/{id}', [AdminDirectorController::class, 'delete'])->name('admin.director.delete');
+    // director Modlue end
 });
 // Admin route end
 

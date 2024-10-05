@@ -36,4 +36,20 @@ class SubSubCategory extends Model
     {
         return $this->hasMany(CategoryPriceHistory::class);
     }
+
+    static public function getSubCategoryOfSubCategoryById($id=null)
+    {
+        if($id == null) return null;
+        $SubSubCategory = SubSubCategory::where('id', $id)->first();
+        $subCategoryId = $SubSubCategory->subCategory->id;
+        return $subCategoryId ? $subCategoryId : null;
+    }
+
+    static public function getCategoryOfSubCategoryById($id=null)
+    {
+        if($id == null) return null;
+        $SubSubCategory = SubSubCategory::where('id', $id)->first();
+        $CategoryId = $SubSubCategory->subCategory->category_id;
+        return $CategoryId ? $CategoryId : null;
+    }
 }

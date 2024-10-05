@@ -31,7 +31,7 @@
                                         id="uploadedAvatar" />
                                 </div>
                             <div class="mb-3 col-md-12">
-                                <label for="title" class="form-label">title</label>
+                                <label for="title" class="form-label">Title</label>
                                 <input class="form-control @error('title') is-invalid @enderror" type="text"
                                     id="title" name="title" value="{{ $HomeSlider['title'] }}" autofocus />
                                 <div id="title_error" class="text-danger"> @error('title')

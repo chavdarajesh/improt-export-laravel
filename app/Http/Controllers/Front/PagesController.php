@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\ContactSetting;
+use App\Models\Director;
 use App\Models\HomeSlider;
 use App\Models\Newsletter;
 use App\Models\Service;
@@ -25,7 +26,8 @@ class PagesController extends Controller
     }
     public function about()
     {
-        return view('front.pages.about');
+        $Directors = Director::where('status', 1)->orderBy('id', 'DESC')->get();
+        return view('front.pages.about', ['Directors' => $Directors]);
     }
     public function services()
     {

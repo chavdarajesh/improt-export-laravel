@@ -39,6 +39,13 @@
             </a>
         </li>
         <li
+            class="menu-item  {{ $current_route_name == 'admin.director.index' || $current_route_name == 'admin.director.create' || $current_route_name == 'admin.director.edit' || $current_route_name == 'admin.director.view' ? 'active' : '' }}">
+            <a href="{{ route('admin.director.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div>Directors</div>
+            </a>
+        </li>
+        <li
             class="menu-item  {{ $current_route_name == 'admin.sisterscompanylogo.index' || $current_route_name == 'admin.sisterscompanylogo.create' || $current_route_name == 'admin.sisterscompanylogo.edit' || $current_route_name == 'admin.sisterscompanylogo.view' ? 'active' : '' }}">
             <a href="{{ route('admin.sisterscompanylogo.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-wallet-alt"></i>

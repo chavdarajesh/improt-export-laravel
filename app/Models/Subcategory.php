@@ -30,4 +30,12 @@ class Subcategory extends Model
     {
         return $this->hasMany(SubSubCategory::class,'sub_category_id');
     }
+
+    static public function getCategoryOfSubCategoryById($id=null)
+    {
+        if($id == null) return null;
+        $SubCategory = SubCategory::where('id', $id)->first();
+        $CategoryId = $SubCategory->category_id;
+        return $CategoryId ? $CategoryId : null;
+    }
 }
