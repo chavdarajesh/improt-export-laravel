@@ -1,11 +1,11 @@
  <!-- bootstrap css -->
  <link rel="stylesheet" type="text/css" href="{{ asset('assets/front/css/bootstrap.min.css') }}">
  <!-- style css -->
- <link rel="stylesheet" type="text/css" href="{{ asset('assets/front/css/style.css?sdcsdcsd') }}">
+ <link rel="stylesheet" type="text/css" href="{{ asset('assets/front/css/style.css?'.time()) }}">
  <!-- Responsive-->
- <link rel="stylesheet" href="{{ asset('assets/front/css/responsive.css') }}">
+ <link rel="stylesheet" href="{{ asset('assets/front/css/responsive.css?'.time()) }}">
  <!-- Scrollbar Custom CSS -->
- <link rel="stylesheet" href="{{ asset('assets/front/css/jquery.mCustomScrollbar.min.css') }}">
+ <link rel="stylesheet" href="{{ asset('assets/front/css/jquery.mCustomScrollbar.min.css?'.time()) }}">
  <!-- Tweaks for older IEs-->
  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
  <!-- fonts -->
@@ -44,7 +44,7 @@
      .dropdown-menu-items-product a:hover,
      .dropdown-menu-items-product a.active {
          color: #ffffff;
-         background-color: #13a25d;
+         background-color: #01613c;
      }
 
      /* hover dropdown menus */

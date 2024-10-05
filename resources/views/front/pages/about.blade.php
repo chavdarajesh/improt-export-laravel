@@ -11,7 +11,7 @@
         transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
     }
    .ticket-card:hover {
-        background-color: #28a745;
+        background-color: #cba24a;
         color: #fff !important;
         transform: translateY(-10px);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
@@ -45,7 +45,7 @@
     }
 
     .profile-container .profile-card:hover {
-        background-color: #28a745;
+        background-color: #cba24a;
         color: #fff !important;
         transform: translateY(-10px);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
