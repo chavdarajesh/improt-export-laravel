@@ -78,10 +78,10 @@ $contact_enquiry_phone = SiteSetting::getSiteSettings('contact_enquiry_phone');
                 <h2 class="modal-title" id="exampleModalCenterTitle">Price History | {{$Product->name}}</h2>
                 <div>
                     @if(!$pricesINR->isEmpty())
-                    <button class="grapg_bt mx-2" data-toggle="modal" data-target="#INRPriceStatistics">INR Price Statistics</button>
+                    <button class="grapg_bt m-2" data-toggle="modal" data-target="#INRPriceStatistics">INR Price Statistics</button>
                     @endif
                     @if(!$pricesUSD->isEmpty())
-                    <button class="grapg_bt mx-2" data-toggle="modal" data-target="#USDPriceStatistics">USD Price Statistics</button>
+                    <button class="grapg_bt m-2" data-toggle="modal" data-target="#USDPriceStatistics">USD Price Statistics</button>
                     @endif
                     <button type="button" class="close close-modal-butoon" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>

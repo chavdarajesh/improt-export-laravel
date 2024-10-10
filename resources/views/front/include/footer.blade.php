@@ -17,13 +17,13 @@
          @if ($ContactSetting)
          <div class="location_main">
              @if ($ContactSetting['location'])
-             <div class="location_text"><img src="{{ asset('assets/front/images/map-icon.png') }}"><span class="padding_left_10"><a href="javascript:void(0);">Location : {{ $ContactSetting['location'] }}</a></span></div>
+             <div class="location_text col-lg-4"><img src="{{ asset('assets/front/images/map-icon.png') }}"><span class="padding_left_10"><a href="javascript:void(0);">Location : {{ $ContactSetting['location'] }}</a></span></div>
              @endif
              @if ($ContactSetting['phone'])
-             <div class="location_text center"><img src="{{ asset('assets/front/images/call-icon.png') }}"><span class="padding_left_10"><a target="_blank" href="tel:{{ $ContactSetting['phone'] ? $ContactSetting['phone'] : '' }}">Call : {{ $ContactSetting['phone'] }}</a></span></div>
+             <div class="location_text col-lg-4"><img src="{{ asset('assets/front/images/call-icon.png') }}"><span class="padding_left_10"><a target="_blank" href="tel:{{ $ContactSetting['phone'] ? $ContactSetting['phone'] : '' }}">Call : {{ $ContactSetting['phone'] }}</a></span></div>
              @endif
              @if ($ContactSetting['email'])
-             <div class="location_text right"><img src="{{ asset('assets/front/images/mail-icon.png') }}"><span class="padding_left_10"><a target="_blank" href="mailto:{{ $ContactSetting['email'] ? $ContactSetting['email'] : '' }}">Email : {{ $ContactSetting['email'] }}</a></span></div>
+             <div class="location_text col-lg-4"><img src="{{ asset('assets/front/images/mail-icon.png') }}"><span class="padding_left_10"><a target="_blank" href="mailto:{{ $ContactSetting['email'] ? $ContactSetting['email'] : '' }}">Email : {{ $ContactSetting['email'] }}</a></span></div>
              @endif
          </div>
          @endif
@@ -34,8 +34,14 @@
                      <p class="footer_text">There are many variations of passages of Lorem Ipsum available, but the majority havThere are many variations of passages of Lorem Ipsum available, but the majority hav</p>
                  </div>
                  <div class="col-lg-4">
-                     <h2 class="footer_taital">Services Link</h2>
-                     <p class="footer_text">There are many variations of passages of Lorem Ipsum available, but the majority havThere are many variations of passages of Lorem Ipsum available, but the majority hav</p>
+                     <h2 class="footer_taital">Quick Link</h2>
+                     <!-- <p class="footer_text">There are many variations of passages of Lorem Ipsum available, but the majority havThere are many variations of passages of Lorem Ipsum available, but the majority hav</p> -->
+                      <ul>
+                        <li><a href="{{ route('front.home') }}" class="text-white">Home</a></li>
+                        <li><a  href="{{ route('front.about') }}" class="text-white">About Us</a></li>
+                        <li><a  href="{{ route('front.services') }}" class="text-white">Services</a></li>
+                        <li><a  href="{{ route('front.contact') }}" class="text-white">Contact Us</a></li>
+                      </ul>
                  </div>
                  <div class="col-lg-4">
                      <h2 class="footer_taital">Subscribe</h2>
