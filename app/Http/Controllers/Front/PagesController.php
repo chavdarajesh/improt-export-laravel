@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\ContactSetting;
+use App\Models\CategoryPriceHistory;
 use App\Models\Director;
 use App\Models\HomeSlider;
 use App\Models\Newsletter;
@@ -32,7 +33,7 @@ class PagesController extends Controller
     public function services()
     {
         $Services = Service::where('status', 1)->orderBy('id', 'DESC')->get();
-        return view('front.pages.services',['Services' => $Services]);
+        return view('front.pages.services', ['Services' => $Services]);
     }
 
     public function term_and_condition()
@@ -102,7 +103,30 @@ class PagesController extends Controller
     {
         $Product = SubSubCategory::find($id);
         if ($Product) {
-            return view('front.pages.sub-product', ['Product' => $Product]);
+            $CategoryPriceHistoryINR = CategoryPriceHistory::where('sub_sub_category_id', $id)
+                ->select('price_inr', 'changed_at') // Select price_usd and changed_at columns
+                ->orderBy('changed_at') // Optional: order by date
+                ->get();
+
+            $uniquePricesINR = $CategoryPriceHistoryINR->groupBy('price_inr')->map(function ($group) {
+                return $group->first(); // Get the first occurrence for each price
+            });
+
+            $pricesINR = $uniquePricesINR->pluck('price_inr');
+            $datesINR = $uniquePricesINR->pluck('changed_at');
+
+            $CategoryPriceHistoryUSD = CategoryPriceHistory::where('sub_sub_category_id', $id)
+                ->select('price_usd', 'changed_at') // Select price_usd and changed_at columns
+                ->orderBy('changed_at') // Optional: order by date
+                ->get();
+
+            $uniquePricesUSD = $CategoryPriceHistoryUSD->groupBy('price_usd')->map(function ($group) {
+                return $group->first(); // Get the first occurrence for each price
+            });
+
+            $pricesUSD = $uniquePricesUSD->pluck('price_usd');
+            $datesUSD = $uniquePricesUSD->pluck('changed_at');
+            return view('front.pages.sub-product', ['Product' => $Product, 'datesINR' => $datesINR, 'pricesINR' => $pricesINR, 'datesUSD' => $datesUSD, 'pricesUSD' => $pricesUSD]);
         } else {
             return redirect()->back()->with('error', 'Product Not Found..!');
         }

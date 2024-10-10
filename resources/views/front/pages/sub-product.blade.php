@@ -11,6 +11,20 @@ $contact_enquiry_phone = SiteSetting::getSiteSettings('contact_enquiry_phone');
     p {
         margin: 0;
     }
+
+    .barChart {
+        width: 100% !important;
+        height: 100% !important;
+    }
+    .grapg_bt {
+    float: left;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: #01613c;
+    text-align: center;
+    padding: 5px 5px;
+    font-family: 'Roboto', sans-serif;
+}
 </style>
 @stop
 @section('content')
@@ -62,9 +76,17 @@ $contact_enquiry_phone = SiteSetting::getSiteSettings('contact_enquiry_phone');
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="exampleModalCenterTitle">Price History | {{$Product->name}}</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <div>
+                    @if(!$pricesINR->isEmpty())
+                    <button class="grapg_bt mx-2" data-toggle="modal" data-target="#INRPriceStatistics">INR Price Statistics</button>
+                    @endif
+                    @if(!$pricesUSD->isEmpty())
+                    <button class="grapg_bt mx-2" data-toggle="modal" data-target="#USDPriceStatistics">USD Price Statistics</button>
+                    @endif
+                    <button type="button" class="close close-modal-butoon" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
@@ -72,15 +94,15 @@ $contact_enquiry_phone = SiteSetting::getSiteSettings('contact_enquiry_phone');
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Price INR</th>
-                                <th scope="col">Price USD</th>
+                                <th scope="col">INR Price </th>
+                                <th scope="col">USD Price </th>
                                 <th scope="col">Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($Product->priceHistory as $priceHistory)
+                            @foreach($Product->priceHistory as $key=> $priceHistory)
                             <tr>
-                                <th scope="row">1</th>
+                                <th scope="row">{{$key+1}}</th>
                                 <td>{{$priceHistory->price_inr}}</td>
                                 <td>{{$priceHistory->price_usd}}</td>
                                 <td>{{$priceHistory->changed_at}}</td>
@@ -90,11 +112,148 @@ $contact_enquiry_phone = SiteSetting::getSiteSettings('contact_enquiry_phone');
                     </table>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary close-modal-butoon" data-dismiss="modal">Close</button>
+            </div> -->
+        </div>
+    </div>
+</div>
+<div class="modal fade bd-example-modal-lg" id="INRPriceStatistics" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalCenterTitle">INR Price Statistics | {{$Product->name}}</h2>
+                <div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             </div>
+            <div class="modal-body">
+                <div>
+                    <canvas id="barINRChart" class="barChart" style="height:100%; width:100%"></canvas>
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+            </div> -->
+        </div>
+    </div>
+</div>
+<div class="modal fade bd-example-modal-lg" id="USDPriceStatistics" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalCenterTitle">USD Price Statistics | {{$Product->name}}</h2>
+                <div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <canvas id="barUSDChart" class="barChart" style="height:100%; width:100%"></canvas>
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+            </div> -->
         </div>
     </div>
 </div>
 <!-- blog section end -->
+@stop
+
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // A $( document ).ready() block.
+    $(document).ready(function() {
+        $("#exampleModalCenter").on('hide.bs.modal', function() {
+            $(document.body).css('padding-right', 0);
+        });
+    });
+</script>
+
+<script>
+    const barINRChart = document.getElementById('barINRChart');
+
+    new Chart(barINRChart, {
+        type: 'bar',
+        data: {
+            labels: @json($datesINR), // x-axis (dates)
+            datasets: [{
+                label: 'Price',
+                data: @json($pricesINR), // y-axis (prices)
+                backgroundColor: '#cba24a',
+                borderColor: '#01613c',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Price in INR'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+    const barUSDChart = document.getElementById('barUSDChart');
+
+    new Chart(barUSDChart, {
+        type: 'bar',
+        data: {
+            labels: @json($datesUSD), // x-axis (dates)
+            datasets: [{
+                label: 'Price',
+                data: @json($pricesUSD), // y-axis (prices)
+                backgroundColor: '#cba24a',
+                borderColor: '#01613c',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Price in USD'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+</script>
+
 @stop
